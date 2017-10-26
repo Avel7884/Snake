@@ -1,0 +1,8 @@
+/**
+ * 
+ */
+/**
+ * @author Avel
+ *
+ */
+package SnakeConsole;
