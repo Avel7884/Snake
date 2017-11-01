@@ -2,43 +2,38 @@ package SnakeCore;
 
 import java.awt.Point;
 
-public final class Food implements IObject {
+public final class Food extends IObject {
 
-	private Point loc;
-	private Snake snake;
-	
-	public Food(Snake snake,Point[] p) {
-		loc=p[0];
-		this.snake=snake;
-	}
-	
-	public Food(Snake snake) {
-		this.snake=snake;
-	}
-	
-	/*private void setFood() {
-		loc=new Point(rnd.nextInt(game.width), rnd.nextInt(game.height));
-		while (game.getCell(loc)!='.')
-			loc=new Point(rnd.nextInt(game.width), rnd.nextInt(game.height));
-	}*/
-	
-	@Override
-	public Point[] getLocs() {
-		return new Point[] {loc};
-	}
+    private Point loc;
 
-	@Override
-	public char getIcon() {
-		return '*';
-	}
+    public Food(FoodFactory fact, Point[] p) {
+        this.fact = fact;
+        loc = p[0];
+    }
 
-	@Override
-	public void tick() {}
+    /*
+     * private void setFood() { loc=new Point(rnd.nextInt(game.width), rnd.nextInt(game.height));
+     * while (game.getCell(loc)!='.') loc=new Point(rnd.nextInt(game.width),
+     * rnd.nextInt(game.height)); }
+     */
 
-	@Override
-	public boolean interact(Point p) {
-		snake.grow(1);
-		return false;
-	}
+    @Override
+    public Point[] getLocs() {
+        return new Point[] {loc};
+    }
+
+    @Override
+    public char getIcon() {
+        return '*';
+    }
+
+    @Override
+    public void tick() {}
+
+    @Override
+    public boolean interact(Snake snake, Point p) {
+        snake.grow(1);
+        return false;
+    }
 
 }

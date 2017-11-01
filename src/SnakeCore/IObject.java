@@ -3,9 +3,13 @@ package SnakeCore;
 import java.awt.Point;
 
 
-public interface IObject {
-	Point[] getLocs();
-	char getIcon();
-	void tick();
-	boolean interact(Point p);
+public abstract class IObject {
+    protected IObjFactory fact;
+    abstract Point[] getLocs();
+	public abstract char getIcon();
+	abstract void tick();
+	abstract boolean interact(Snake snake,Point p);
+	public IObjFactory getFact() {
+	  return fact;
+	}
 }
