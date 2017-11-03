@@ -1,21 +1,22 @@
 package SnakeCore;
 
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.Random;
 
-public final class FoodFactory implements IObjFactory {
+public final class FoodFactory extends IObjFactory {
 
     private Random rnd = new Random();
     private GameState game;
     private int foodCount;
     
 	@Override
-	public Food[] configure(GameState game, Point[] p) {
+	public Food[] create(GameState game, Point[] ps) {
 	    this.game=game;
-		return new Food[] { new Food(this,p)};
+        return (Food[]) Arrays.stream(ps).map((Point p)->new Food(this,p)).toArray(Food[]::new);
 	}
     @Override
-	public Food[] configure(GameState game,Integer[] args) {
+	public Food[] baseConf(GameState game,Integer[] args) {
 	    this.game=game;
 	    foodCount=args[0];
 	    Food[] tmp= new Food[foodCount]; 
@@ -29,7 +30,6 @@ public final class FoodFactory implements IObjFactory {
     }
     @Override
     public Food[] utilize(IObject obj) {
-      // TODO Auto-generated method stub
       return null;
     }
     @Override
@@ -40,7 +40,6 @@ public final class FoodFactory implements IObjFactory {
     }
     @Override
     public Food[] getProducts() {
-      // TODO Auto-generated method stub
       return null;
     }
 

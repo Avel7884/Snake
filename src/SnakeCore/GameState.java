@@ -42,7 +42,7 @@ public class GameState {
         width = maze[0].length;// bad
         snake = new Snake(snakePos, snakeDir.getDirN());
         for (Tuple<String, Integer[]> tup : objsCreators) {
-            setObjs(Dic.get(tup.x).configure(this, tup.y));
+            setObjs(Dic.get(tup.x).baseConf(this, tup.y));
         }
     }
 
@@ -84,24 +84,22 @@ public class GameState {
 
     private Point collise() {
         Point next = getBoundedCord(snake.getNext());
-        IObject col = objsCollision(next);
-        if (col == null)
-            return next;
-        boolean b = true;
-        for (Point nextTmp = next; b || (nextTmp.x != next.x && nextTmp.y != next.y);) {
-            nextTmp = next;
-            if (col.interact(snake, next)) { // make interact better
+        IObject col = null;
+        for (Point nextTmp = null; nextTmp==null || (nextTmp.x != next.x && nextTmp.y != next.y);next = snake.getNext()) {
+            col = objsCollision(next);
+            if (col == null)
+                return next;
+            
+            nextTmp = (Point) next.clone();
+            if (col.interact(snake, next)) { //TODO make interact better
                 die();
             } else {
+                setObjs(col.getFact().utilize(col));//TODO Make it better
                 snake.setNext(getBoundedCord(snake.getNext()));
-                col.getFact().utilize(col);// Make it better
             }
-            snake.setNext(getBoundedCord(snake.getNext()));
-            next = snake.getNext();
-            if (nextTmp.x == next.x && nextTmp.y == next.y)
-                objs.remove(col);
-            b = false;
         }
+        if (col != null)
+            objs.remove(col);
         return next;
     }
 
@@ -137,7 +135,7 @@ public class GameState {
     }
 
     public void feedSnake(int val) {
-        snake.grow(val); // Закрыть!
+        snake.grow(val); //TODO Закрыть!
     }
 
 

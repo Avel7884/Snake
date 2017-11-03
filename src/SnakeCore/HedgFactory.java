@@ -1,46 +1,52 @@
 package SnakeCore;
 
 import java.awt.Point;
+import java.util.Arrays;
 
-public class HedgFactory implements IObjFactory {
+public class HedgFactory extends IObjFactory {
 
     private GameState game;
 
     @Override
-    public Hedg[] configure(GameState game, Point[] p) {
+    public Hedg[] create(GameState game, Point[] ps) {
         this.game = game;
-        return new Hedg[] {new Hedg(this, p)};
+        return (Hedg[]) Arrays.stream(ps).map((Point p)->new Hedg(this,p)).toArray(Hedg[]::new);
+        
     }
 
-    public Hedg[] configure(GameState game, Integer[] args) {
+    public Hedg[] baseConf(GameState game, Integer[] args) {
         this.game = game;
-        return new Hedg[] {new Hedg(this, game.getRndFreePoint())};
+        Hedg[] tmp=new Hedg[args[0]];
+        for(int i=0;i<args[0];i++) {
+            tmp[i]=new Hedg(this, new Point[] {game.getRndFreePoint()});
+        }
+        return tmp;
     }
 
     @Override
     public Hedg[] utilize(IObject obj) {
         Hedg hedg;
-        if (obj instanceof Hedg)
+        if (obj instanceof Hedg) {
             hedg = Hedg.class.cast(obj);
-        else
+        } else {
             return null;
-        Point loc = game.getRndFreePoint(); 
-        while (game.getCell(game.getBoundedCord(    //TODO what
-                            new Point(loc.x + hedg.getDir().getDir().x,
-                                      loc.y + hedg.getDir().getDir().y))) != '.')
+        }
+        Point loc = game.getRndFreePoint();
+        while (game.getCell(game.getBoundedCord( // TODO what
+                new Point(loc.x + hedg.getDir().getDir().x,
+                          loc.y + hedg.getDir().getDir().y))) != '.') {
             loc = game.getRndFreePoint();
+        }
         return new Hedg[] {new Hedg(this, loc)};
     }
 
     @Override
     public Hedg[] tick() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Hedg[] getProducts() {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -2,15 +2,19 @@ package SnakeCore;
 
 import java.awt.Point;
 
-public class TeleportFactory implements IObjFactory {
-
+public class TeleportFactory extends IObjFactory {
+    //TODO count teleports
     @Override
-    public Teleport[] configure(GameState game, Point[] ps) {
-        return new Teleport[] {new Teleport(this, getChar(0), ps)};
+    public Teleport[] create(GameState game, Point[] ps) {
+        Teleport[] tmp=new Teleport[ps.length/2];
+        for(int i=0;i<ps.length;i+=2) {
+            tmp[i/2]=new Teleport(this,getChar(i/2),ps[i],ps[i+1]);
+        }
+        return tmp;
     }
 
     @Override
-    public Teleport[] configure(GameState game, Integer[] args) {
+    public Teleport[] baseConf(GameState game, Integer[] args) {
         Teleport[] tmp=new Teleport[args[0]];
         for(int i=0;i<args[0];i++) {
             tmp[i]=new Teleport(this, getChar(i),new Point[] {game.getRndFreePoint(), game.getRndFreePoint()});
@@ -34,19 +38,16 @@ public class TeleportFactory implements IObjFactory {
 
     @Override
     public Teleport[] utilize(IObject obj) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Teleport[] tick() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Teleport[] getProducts() {
-        // TODO Auto-generated method stub
         return null;
     }
 

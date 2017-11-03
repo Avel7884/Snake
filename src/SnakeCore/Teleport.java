@@ -7,19 +7,23 @@ public class Teleport extends IObject {
     private char ico;
     private Point enterA;
     private Point enterB;
-    private Point[] ps;
 
     public Teleport(TeleportFactory fact,char ico, Point[] ps) {
         this.fact = fact;
-        this.ps = ps;
         enterA = ps[0];
         enterB = ps[1];
+        this.ico=ico;
+    }
+    public Teleport(TeleportFactory fact,char ico, Point a,Point b) {
+        this.fact = fact;
+        enterA = a;
+        enterB = b;
         this.ico=ico;
     }
 
     @Override
     public Point[] getLocs() {
-        return ps;
+        return new Point[]{enterA,enterB};
     }
 
     @Override

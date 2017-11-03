@@ -10,6 +10,10 @@ public final class Food extends IObject {
         this.fact = fact;
         loc = p[0];
     }
+    public Food(FoodFactory fact, Point p) {
+        this.fact = fact;
+        loc = p;
+    }
 
     /*
      * private void setFood() { loc=new Point(rnd.nextInt(game.width), rnd.nextInt(game.height));

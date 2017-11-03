@@ -6,12 +6,17 @@ public class Pillow extends IObject {
 
     private Point loc;
     private int timer = 0;
-    private int maxTimer = 15;
+    private int maxTimer = 5;
     private Snake snake;
 
     public Pillow(PillowFactory fact, Point[] p) {
         this.fact = fact;
         loc = p[0];
+    }
+    
+    public Pillow(PillowFactory fact, Point p) {
+        this.fact = fact;
+        loc = p;
     }
 
     @Override
