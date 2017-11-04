@@ -11,7 +11,7 @@ public abstract class IObjFactory{
 	    if(args[0]==-1) {
 	        tmp= new Point[(args.length-1)/2];
 	        for(int i=1;i<args.length;i+=2) {
-	            tmp[i/2]=new Point(args[i],args[i+1]);
+	            tmp[(i-1)/2]=new Point(args[i],args[i+1]);
 	        }
 	        return create(game,tmp);
 	    }

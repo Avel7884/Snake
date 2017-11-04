@@ -4,25 +4,13 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.events.TouchEvent;
-import org.eclipse.swt.events.TouchListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 import SnakeCore.GameState;
 import SnakeCore.Saver;
@@ -186,7 +174,7 @@ public class GUI {
 			 	 	case(SWT.F4):
 			 	 		display.timerExec(-1, gameTick);
 			 	 		flag = false;
-			 	 		runGame(canvas, ".\\Snake\\levels\\Simple.txt", gameTick);
+			 	 		runGame(canvas, ".\\levels\\Simple.txt", gameTick);
 			 	 		break;
 			 	 	case(SWT.F2):
 			 	 		display.timerExec(-1, gameTick);
@@ -218,7 +206,7 @@ public class GUI {
 		});
 		shell.open(); 
 		shell.setSize(600, 600);
-		runGame(canvas, ".\\Snake\\levels\\Simple.txt", gameTick);
+		runGame(canvas, ".\\levels\\FirstOne.txt", gameTick);
 
 		canvas.redraw();
 		

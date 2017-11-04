@@ -12,10 +12,10 @@ public class Saver {
 		int hedgCounter = 0;
 		int foodCounter  = 0;
 		int pilCounter = 0;
-		ArrayList<Point> food = new ArrayList();
-		ArrayList<Point> pil = new ArrayList();
-		ArrayList<Point> hedg = new ArrayList();
-		ArrayList<Point> tel = new ArrayList();
+		List<Point> food = new ArrayList<Point>();
+		List<Point> pil = new ArrayList<Point>();
+		List<Point> hedg = new ArrayList<Point>();
+		List<Point> tel = new ArrayList<Point>();
 		
 		char[][] a = game.getMap();
 		rezultStr.append(Integer.toString(a[1].length - 4) + ' ' + Integer.toString(a.length) + '\n');
@@ -70,6 +70,14 @@ public class Saver {
 						rezultStr.append('.');
 						telCounter++;
 						break;
+                    case('t'):
+                        rezultStr.append('.');
+                        telCounter++;
+                        break;
+                    case('p'):
+                        rezultStr.append('.');
+                        telCounter++;
+                        break;
 					case('*'):
 						Point p5 = new Point(i, j);
 						food.add(p5);
@@ -101,35 +109,38 @@ public class Saver {
 		}
 		rezultStr.append('\n');
 		rezultStr.append(Integer.toString(game.getSnakeDir().getDirN()) + '\n');
+		rezultStr.append("Pillow -1 ");
 		if (pilCounter != 0) 
 		{
-			rezultStr.append("Pillow -1 ");
-			for (int i = 0; i < pilCounter; i++)
-				rezultStr.append(Integer.toString(pil.get(i).x) + ' '  + Integer.toString(pil.get(i).y) + ' ');
+            for (Point p : pil)
+                rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
 		}
+        rezultStr.append('\n');
+		rezultStr.append("Food -1 ");
 		if (foodCounter != 0) 
 		{
-			rezultStr.append("Food -1 " + Integer.toString(foodCounter) + '\n');
-			for (int i = 0; i < foodCounter; i++)
-				rezultStr.append(Integer.toString(food.get(i).x) + ' '  + Integer.toString(food.get(i).y) + ' ');
+			for (Point p : food)
+				rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
 			
 		}
+		rezultStr.append('\n');
 		if (telCounter != 0)
 		{
-			rezultStr.append("Teleport " + Integer.toString(telCounter) + '\n');
+			rezultStr.append("Teleport " + Integer.toString(telCounter));
 		}
+        rezultStr.append('\n');
+		rezultStr.append("Hedg -1 ");
 		if (hedgCounter != 0)
 		{
-			rezultStr.append("Hedg -1 " + Integer.toString(hedgCounter) + '\n');
 			for (int i = 0; i < hedgCounter; i++)
 			{
-				rezultStr.append(Integer.toString(hedg.get(i).x) + ' '  + Integer.toString(hedg.get(i).y) + ' ');
-				rezultStr.append(Integer.toString(hedg.get(i + 1).x) + ' '  + Integer.toString(hedg.get(i + 1).y) + ' ');
+				rezultStr.append(Integer.toString(hedg.get(i).y) + ' '  + Integer.toString(hedg.get(i).x) + ' ');
+				rezultStr.append(Integer.toString(hedg.get(i + 1).y) + ' '  + Integer.toString(hedg.get(i + 1).x) + ' ');
 			}
-			
 		}
 		try {
-			FileWriter writer = new FileWriter(path, false);
+			@SuppressWarnings("resource")
+            FileWriter writer = new FileWriter(path, false);
 			writer.write(rezultStr.toString());
 			writer.flush();
 		} catch (IOException e) {
