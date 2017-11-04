@@ -21,6 +21,12 @@ public final class Hedg extends IObject {
         loc = p;
         commonInit();
     }
+    public Hedg(HedgFactory fact, Point p,Point d) {
+        this.fact = fact;
+        loc = p;
+        dir = new Direction(d);
+        ico = makeIco(dir.getDirN());
+    }
 
     public Hedg(HedgFactory fact) {
         this.fact = fact;

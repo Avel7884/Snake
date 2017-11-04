@@ -209,7 +209,7 @@ public class GUI {
         });
         shell.open();
         shell.setSize(600, 600);
-        runGame(canvas, ".\\levels\\FirstOne.txt", gameTick);
+        runGame(canvas, ".\\levels\\Small.txt", gameTick);
 
         canvas.redraw();
 

@@ -1,7 +1,6 @@
 package SnakeCore;
 
 import java.awt.Point;
-import java.util.Arrays;
 
 public class HedgFactory extends IObjFactory {
 
@@ -10,7 +9,11 @@ public class HedgFactory extends IObjFactory {
     @Override
     public Hedg[] create(GameState game, Point[] ps) {
         this.game = game;
-        return (Hedg[]) Arrays.stream(ps).map((Point p)->new Hedg(this,p)).toArray(Hedg[]::new);
+        Hedg[] tmp =new Hedg[ps.length/2];
+        for(int i=0;i<ps.length;i+=2) {
+            tmp[i/2]=new Hedg(this,ps[i],ps[i+1]);
+        }
+        return tmp;//(Hedg[]) Arrays.stream(ps).map((Point p)->new Hedg(this,p)).toArray(Hedg[]::new);
         
     }
 
