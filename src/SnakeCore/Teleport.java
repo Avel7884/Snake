@@ -41,7 +41,7 @@ public class Teleport extends IObject {
             targ = enterB;
         else // (p.x==enterB.x && p.y==enterB.y)
             targ = enterA;
-        Point dir = snake.dir.getDir();
+        Point dir = snake.getDir().getDir();
         snake.setNext(new Point(targ.x + dir.x, targ.y + dir.y));
         return false;
     }

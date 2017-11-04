@@ -50,8 +50,8 @@ public class GameState {
     public char[][] getMap() {
         for (int i = 0; i < map.length; i++)
             map[i] = maze[i].clone();
-        for (int i = 0; i < snake.body.size(); i++) {
-            Point p = snake.body.get(i);
+        for (int i = 0; i < snake.getBody().size(); i++) {
+            Point p = snake.getBody().get(i);
             map[p.y][p.x] = '@';
         }
 
@@ -73,7 +73,7 @@ public class GameState {
         tickObjs();
         tickFactorys();
 
-        if (!snake.isMoving)
+        if (!snake.isMoving())
             return true;
         Point next = collise();
         if (maze[next.y][next.x] == '+' || (maze[next.y][next.x] == '.' && snake.makeStep()))
@@ -152,7 +152,7 @@ public class GameState {
             return '#';
         if (maze[p.y][p.x] == '+')
             return '+';
-        for (Point part : snake.body)
+        for (Point part : snake.getBody())
             if (part.x == p.x && part.y == p.y)
                 return '@';
         IObject obj = objsCollision(p);
@@ -177,11 +177,11 @@ public class GameState {
     }
 
     public Direction getSnakeDir() {
-        return snake.dir;
+        return snake.getDir();
     }
 
     public int getLenght() {
-        return snake.body.size();
+        return snake.getBody().size();
     }
 
     protected List<IObject> getObjsArr() {

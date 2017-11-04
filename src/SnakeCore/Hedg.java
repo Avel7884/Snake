@@ -73,7 +73,7 @@ public final class Hedg extends IObject {
      */
     @Override
     public boolean interact(Snake snake, Point p) {
-        if (snake.dir.IsOpposit(dir)) {
+        if (snake.getDir().IsOpposit(dir)) {
             snake.grow(2);
             commonInit();
             // replace();

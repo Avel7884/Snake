@@ -92,7 +92,7 @@ public class Saver {
 			}
 			rezultStr.append('\n');
 		}
-		List<Point> snake = game.getSnake();
+		List<Point> snake = game.getSnake().getBody();
 		for (int i= 0; i < snake.size(); i++)
 		{
 			int x = (int)snake.get(i).getX();
