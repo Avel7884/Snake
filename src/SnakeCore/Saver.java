@@ -15,7 +15,8 @@ public class Saver {
 		List<Point> food = new ArrayList<Point>();
 		List<Point> pil = new ArrayList<Point>();
 		List<Point> hedg = new ArrayList<Point>();
-		List<Point> tel = new ArrayList<Point>();
+		Point[] firstTel = {new Point(-1, -1), new Point(-1, -1)};
+		Point[] secondTel = {new Point(-1, -1), new Point(-1, -1)};
 		
 		char[][] a = game.getMap();
 		rezultStr.append(Integer.toString(a[1].length - 4) + ' ' + Integer.toString(a.length) + '\n');
@@ -63,20 +64,26 @@ public class Saver {
 						pilCounter++;
 						break;
 					case('P'):
+						Point p6 = new Point(i, j);
 						rezultStr.append('.');
+						firstTel[0] = p6;
 						telCounter++;
 						break;
 					case('T'):
+						Point p7 = new Point(i, j);
+						secondTel[0] = p7;
 						rezultStr.append('.');
 						telCounter++;
 						break;
                     case('t'):
+                    	Point p8 = new Point(i, j);
+                    	secondTel[1] = p8;
                         rezultStr.append('.');
-                        telCounter++;
                         break;
                     case('p'):
+                    	Point p9 = new Point(i, j);
+                    	firstTel[1] = p9;
                         rezultStr.append('.');
-                        telCounter++;
                         break;
 					case('*'):
 						Point p5 = new Point(i, j);
@@ -106,32 +113,41 @@ public class Saver {
 			int x = (int)snake.get(i).getX();
 			int y = (int)snake.get(i).getY();
 			rezultStr.append(Integer.toString(x) + ' '  + Integer.toString(y) + ' ');
-		}
-		rezultStr.append('\n');
-		rezultStr.append(Integer.toString(game.getSnakeDir().getDirN()) + '\n');
-		rezultStr.append("Pillow -1 ");
-		if (pilCounter != 0) 
-		{
-            for (Point p : pil)
-                rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
-		}
-        rezultStr.append('\n');
-		rezultStr.append("Food -1 ");
-		if (foodCounter != 0) 
-		{
-			for (Point p : food)
-				rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
 			
 		}
 		rezultStr.append('\n');
+		rezultStr.append(Integer.toString(game.getSnakeDir().getDirN()) + '\n');
+		if (pilCounter != 0) 
+		{
+			rezultStr.append("Pillow -1 ");
+            for (Point p : pil)
+                rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
+            rezultStr.append('\n');
+		}
+        
+		
+		if (foodCounter != 0) 
+		{
+			rezultStr.append("Food -1 ");
+			for (Point p : food)
+				rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
+			rezultStr.append('\n');
+		}
 		if (telCounter != 0)
 		{
-			rezultStr.append("Teleport " + Integer.toString(telCounter));
+			rezultStr.append("Teleport -1 ");
+			if (firstTel[0].x != -1)
+			for (Point p : firstTel)
+				rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
+			if (secondTel[0].x != -1)
+			for (Point p : secondTel)
+				rezultStr.append(Integer.toString(p.y) + ' '  + Integer.toString(p.x) + ' ');
+			rezultStr.append('\n');
 		}
-        rezultStr.append('\n');
-		rezultStr.append("Hedg -1 ");
+		
 		if (hedgCounter != 0)
 		{
+			rezultStr.append("Hedg -1 ");
 			for (int i = 0; i < hedgCounter; i++)
 			{
 				rezultStr.append(Integer.toString(hedg.get(i).y) + ' '  + Integer.toString(hedg.get(i).x) + ' ');
