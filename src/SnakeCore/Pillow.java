@@ -2,43 +2,52 @@ package SnakeCore;
 
 import java.awt.Point;
 
-public class Pillow implements IObject {
+public class Pillow extends IObject {
 
-	private Point loc;
-	private GameState game;
-	private int timer=0; 
-	private int maxTimer=15;
-	private boolean inUse;
-	
-	public Pillow(GameState game,Point[] p) {
-		loc=p[0];
-		this.game=game;
-	}
-	
-	@Override
-	public Point[] getLocs() {
-		return new Point[] {loc};
-	}
+    private Point loc;
+    private int timer = 0;
+    private int maxTimer = 5;
+    private Snake snake;
 
-	@Override
-	public char getIcon() {
-		return '%';
-	}
+    public Pillow(PillowFactory fact, Point[] p) {
+        this.fact = fact;
+        loc = p[0];
+    }
+    
+    public Pillow(PillowFactory fact, Point p) {
+        this.fact = fact;
+        loc = p;
+    }
 
-	@Override
-	public void tick() {
-		if(inUse) timer+=1;
-		if(timer==maxTimer) {
-			game.getSnake().start();
-			game.getObjsArr().remove(this);
-		}
-	}
+    @Override
+    public Point[] getLocs() {
+        return new Point[] {loc};
+    }
 
-	@Override
-	public boolean interact(Point p) {
-		game.getSnake().stop();
-		inUse=true;
-		return false;
-	}
+    @Override
+    public char getIcon() {
+        return '%';
+    }
+
+    @Override
+    public void tick() {
+        if (snake != null)
+            timer += 1;
+        if (timer == maxTimer) {
+            snake.start();
+            snake = null;
+        }
+    }
+
+    @Override
+    public boolean interact(Snake snake, Point p) {
+        this.snake = snake;
+        snake.stop();
+        return false;
+    }
+
+    protected Snake getSnakeOn() {
+        return snake;
+    }
 
 }

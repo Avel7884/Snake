@@ -1,13 +1,14 @@
 package SnakeCore;
 import java.util.LinkedList;//Queue required
+import java.util.List;
 import java.awt.Point;
 
 public class Snake{
-	protected LinkedList<Point> body;
+    private LinkedList<Point> body;
     //public LinkedList<Integer> dirs;
     private int buffer;
-    public Direction dir;
-    protected boolean isMoving;
+    private Direction dir;
+    private boolean isMoving;
     private Point next;
 
     public Snake(Point[] b,int dir) { 
@@ -66,6 +67,17 @@ public class Snake{
 	    	next=new Point(getHead().x+d.x,getHead().y+d.y);
     	}
     	return next;
+    }
+    public List<Point> getBody(){
+        return body;
+    }
+    
+    public Direction getDir() {
+        return dir;
+    }
+    
+    public boolean isMoving(){
+        return isMoving;
     }
     
     public void setNext(Point newNext) {

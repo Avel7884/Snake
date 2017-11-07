@@ -52,12 +52,15 @@ public class StateParser {
 	}
 	
 	//@SuppressWarnings("unchecked")
-	private static ArrayList<Tuple<String, Integer>> getObjs(BufferedReader br) throws IOException {
+	private static ArrayList<Tuple<String, Integer[]>> getObjs(BufferedReader br) throws IOException {
 		String l=br.readLine();
-		ArrayList<Tuple<String, Integer>> objCount = new ArrayList<Tuple<String, Integer>>();
+		ArrayList<Tuple<String, Integer[]>> objCount = new ArrayList<Tuple<String, Integer[]>>();
 		while(l!=null) {
-    		String[] wh1=l.split(" ",2); 
-			objCount.add(new Tuple<String, Integer>(wh1[0],Integer.parseInt(wh1[1])));
+    		String[] wh1=l.split(" "); 
+    		Integer[] tmp= new Integer[wh1.length-1];
+    		for(int i=0;i<wh1.length-1;i++)
+    		  tmp[i]=Integer.parseInt(wh1[i+1]);
+			objCount.add(new Tuple<String, Integer[]>(wh1[0],tmp));
     		l=br.readLine();
 		}
 		
