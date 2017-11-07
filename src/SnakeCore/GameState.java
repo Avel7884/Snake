@@ -83,24 +83,25 @@ public class GameState {
     }
 
     private Point collise() {
-        Point next = getBoundedCord(snake.getNext());
-        IObject col = null;
-        for (Point nextTmp = null; nextTmp==null || (nextTmp.x != next.x && nextTmp.y != next.y);next = snake.getNext()) {
-            col = objsCollision(next);
-            if (col == null)
-                return next;
-            
-            nextTmp = (Point) next.clone();
-            if (col.interact(snake, next)) { //TODO make interact better
+        IObject col = objsCollision(snake.getNext());
+        for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
+            if (col == null) {
+                snake.setNext(getBoundedCord(snake.getNext()));
+                return snake.getNext();
+            }
+            nextTmp = (Point) snake.getNext().clone();
+            if (col.interact(snake, snake.getNext())) { //TODO make interact better
+                col=null;
                 die();
             } else {
                 setObjs(col.getFact().utilize(col));//TODO Make it better
                 snake.setNext(getBoundedCord(snake.getNext()));
             }
+            col = objsCollision(snake.getNext());
         }
         if (col != null)
             objs.remove(col);
-        return next;
+        return snake.getNext();
     }
 
     private void tickFactorys() {
