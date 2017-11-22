@@ -24,7 +24,7 @@ public class Snake{
     }
     
     public boolean turn(Direction newdir){
-        if (dir.IsOpposit(newdir)) return false;
+        if (dir.isOpposit(newdir)) return false;
         dir=newdir;
         next=null;
         next=getNext();

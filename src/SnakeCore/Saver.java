@@ -9,14 +9,13 @@ import java.util.Map;
 public class Saver {    
     public static void addTelep(Map<Character,Tuple<Point,Point>> map,Point p,char c) {
         if (map.containsKey(c)) {
-            map.put(c, new Tuple<Point,Point>(map.get(c).x ,p));
+            map.put(c, new Tuple<Point,Point>(map.get(c).getX() ,p));
         }else{
             map.put(c, new Tuple<Point,Point>(p,null));
         }
     }
     
-    public static void save(String path, GameState game)
-    {
+    public static void save(String path, GameState game) {
         StringBuffer rezultStr = new StringBuffer();
         List<Point> food = new ArrayList<Point>();
         List<Point> pil = new ArrayList<Point>();
@@ -25,8 +24,7 @@ public class Saver {
         
         char[][] a = game.getMap();
         rezultStr.append(Integer.toString(a[1].length - 4) + ' ' + Integer.toString(a.length) + '\n');
-        for (int i = 0; i < a.length; i++)
-        {
+        for (int i = 0; i < a.length; i++) {
             for (int j = 0; j < a[i].length; j++)
             {
                 switch(a[i][j]) {   
@@ -133,8 +131,8 @@ public class Saver {
         {
             rezultStr.append("Teleport -1 ");
             for (Tuple<Point,Point> p : tels.values()) {
-                rezultStr.append(Integer.toString(p.x.y) + ' '  + Integer.toString(p.x.x) + ' ');
-                rezultStr.append(Integer.toString(p.y.y) + ' '  + Integer.toString(p.y.x) + ' ');
+                rezultStr.append(Integer.toString(p.getX().y) + ' '  + Integer.toString(p.getX().x) + ' ');
+                rezultStr.append(Integer.toString(p.getY().y) + ' '  + Integer.toString(p.getY().x) + ' ');
             }
             rezultStr.append('\n');
         }

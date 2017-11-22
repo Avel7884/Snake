@@ -18,19 +18,14 @@ public class GameState {
     private int height;
     private int width;
 
-    public static HashMap<String, IObjFactory> Dic = new HashMap<String, IObjFactory>();
-    static {
-        Dic.put("Food", new FoodFactory());
-        Dic.put("Hedg", new HedgFactory());
-        Dic.put("Teleport", new TeleportFactory());
-        Dic.put("Pillow", new PillowFactory());
+    private HashMap<String, IObjFactory> dic;
+    {
+        dic = new HashMap<String, IObjFactory>();
+        dic.put("Food", new FoodFactory());
+        dic.put("Hedg", new HedgFactory());
+        dic.put("Teleport", new TeleportFactory());
+        dic.put("Pillow", new PillowFactory());
     }
-    /*
-     * public GameState(String key){ SetMap(key); isAlive=true; //objs.add(e) snake=new Snake(new
-     * Point[] {new Point(4,3),new Point(5,3)},0);//BBAADD!
-     * 
-     * }
-     */
 
     public GameState(char[][] maze, Point[] snakePos, Direction snakeDir,
             ArrayList<Tuple<String, Integer[]>> objsCreators) {
@@ -42,7 +37,7 @@ public class GameState {
         width = maze[0].length;// bad
         snake = new Snake(snakePos, snakeDir.getDirN());
         for (Tuple<String, Integer[]> tup : objsCreators) {
-            setObjs(Dic.get(tup.x).configure(this, tup.y));
+            setObjs(dic.get(tup.getX()).configure(this, tup.getY()));
         }
     }
 
@@ -105,7 +100,7 @@ public class GameState {
     }
 
     private void tickFactorys() {
-        for (IObjFactory fact : Dic.values())
+        for (IObjFactory fact : dic.values())
             setObjs(fact.tick());
     }
 
@@ -136,7 +131,7 @@ public class GameState {
     }
 
     public void feedSnake(int val) {
-        snake.grow(val); //TODO Закрыть!
+        snake.grow(val);
     }
 
 
