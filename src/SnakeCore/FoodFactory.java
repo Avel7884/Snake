@@ -28,6 +28,9 @@ public final class FoodFactory extends IObjFactory {
     private Food[] configure(Point[] points) {
       return new Food[] { new Food(this,points)}; 
     }
+    public void setFood(Point p) {
+        game.setObj(new Food(this,p));
+    }
     @Override
     public Food[] utilize(IObject obj) {
       return null;

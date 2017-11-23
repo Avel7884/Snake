@@ -11,10 +11,11 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-
+import SnakeCore.ControlIntellect;
 import SnakeCore.GameState;
-import SnakeCore.Saver;
 import SnakeCore.StateParser;
+//import SnakeCore.IIntellect;
+//import SnakeCore.Saver;
 //import java.util.Timer;
 //import java.util.TimerTask;
 
@@ -22,6 +23,7 @@ public class GUI {
 	private static Display display = new Display();
 	private static Shell shell = new Shell(display);
 	private static GameState gameState;
+    private static ControlIntellect intel;
 	private static Font font = new Font(display,"Arial",14,SWT.BOLD | SWT.ITALIC);
 	private static boolean flag = false;
 	private static Image hedgA = new Image(display, ".\\sprites\\hedgA.png");
@@ -33,7 +35,7 @@ public class GUI {
 	private static Image pil = new Image(display, ".\\sprites\\pil.png");
 	private static Image apple = new Image(display, ".\\sprites\\apple.gif");
 
-	
+	private static String level=".\\levels\\FirstOne.txt";
 	
 	private static final String[][] FILTERS = {
             {"Все файлы (*.*)"     , "*.*"  }};
@@ -65,6 +67,7 @@ public class GUI {
 	public static void runGame(Canvas canvas, String path, Runnable gameTick)
 	{
 		gameState = StateParser.makeGame(path);
+		intel = gameState.getCtrlIntel();
 		display.timerExec(500, gameTick);		
 	}
 	
@@ -121,12 +124,17 @@ public class GUI {
 						case('D'):
 							drawSprite(e, hedgD, j*sqRez, i*sqRez, sqRez);
 							break;
+							/*
 						case('@'):
 							if (j == gameState.getHead().x && i == gameState.getHead().y)
 								drawColoredSq(e, j*sqRez, i*sqRez, sqRez - 1, SWT.COLOR_DARK_GREEN);
 							else
 								drawColoredSq(e, j*sqRez, i*sqRez, sqRez - 1, SWT.COLOR_GREEN);
 							break;
+							*/
+                        case('1'):
+                            drawColoredSq(e, j*sqRez, i*sqRez, sqRez - 1, SWT.COLOR_GREEN);
+                            break;
 						case('#'):
 							drawColoredSq(e, j*sqRez, i*sqRez, sqRez - 1, SWT.COLOR_BLACK);
 							break;
@@ -151,7 +159,7 @@ public class GUI {
 						}
 					}
 				
-				e.gc.drawText("Длина змейки:  " + gameState.getLenght(), 10, sqRez * (a.length));
+				//e.gc.drawText("Длина змейки:  " + gameState.getLenght(), 10, sqRez * (a.length));
 				if (flag) {
 					e.gc.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_DARK_MAGENTA));
 					e.gc.drawText("Game over", 100, 100);
@@ -174,8 +182,9 @@ public class GUI {
 			 	 	case(SWT.F4):
 			 	 		display.timerExec(-1, gameTick);
 			 	 		flag = false;
-			 	 		runGame(canvas, ".\\levels\\Simple.txt", gameTick);
+			 	 		runGame(canvas, level, gameTick);
 			 	 		break;
+			 	 		/*
 			 	 	case(SWT.F2):
 			 	 		display.timerExec(-1, gameTick);
 			 	 		FileDialog dlg2 = new FileDialog(shell, SWT.SAVE);
@@ -185,17 +194,18 @@ public class GUI {
 				 	 	Saver.save(fname2, gameState);
 				 	 	display.timerExec(500, gameTick);
 			 	 		break;
+			 	 		*/
 					case(SWT.KEYPAD_4):
-						gameState.turnSnake(4);
+						intel.setDir(4);
 						break;
 					case(SWT.KEYPAD_6):
-						gameState.turnSnake(6);
+					    intel.setDir(6);
 						break;
 					case(SWT.KEYPAD_2):
-						gameState.turnSnake(2);
+					    intel.setDir(2);
 						break;
 					case(SWT.KEYPAD_8):
-						gameState.turnSnake(8);
+					    intel.setDir(8);
 						break;
 				}
 					
@@ -206,7 +216,7 @@ public class GUI {
 		});
 		shell.open(); 
 		shell.setSize(600, 600);
-		runGame(canvas, ".\\levels\\FirstOne.txt", gameTick);
+		runGame(canvas, level, gameTick);
 
 		canvas.redraw();
 		

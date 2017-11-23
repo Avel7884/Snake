@@ -1,92 +1,112 @@
 package SnakeCore;
-import java.util.LinkedList;//Queue required
-import java.util.List;
+
 import java.awt.Point;
+import java.util.LinkedList;
+import java.util.List;
 
-public class Snake{
-    private LinkedList<Point> body;
-    //public LinkedList<Integer> dirs;
-    private int buffer;
-    private Direction dir;
-    private boolean isMoving;
+public class Snake extends IObject {
+    private LinkedList<Point> body =new LinkedList<Point>();
+    private IIntellect intel;
+    private char ico;
+    private int buffer=0;
+    private boolean isMoving=true; 
+    private boolean isAlive=true; 
     private Point next;
-
-    public Snake(Point[] b,int dir) { 
-    	isMoving=true; 
-    	buffer=0;
-    	body=new LinkedList<Point>();
-    	//dirs=new LinkedList<Integer>();
-    	for(Point p:b ) { //проверка на замктнутость
-    		body.add(p);
-    		//dirs.add(0);
-    	}
-    	this.dir=new Direction(dir);
-    }
     
-    public boolean turn(Direction newdir){
-        if (dir.isOpposit(newdir)) return false;
-        dir=newdir;
-        next=null;
-        next=getNext();
-        return true;
-    }
-
-    public boolean makeStep(){
-    	if (!isMoving) return true;
-    	
-    	if (body.contains(getNext())) {
-    		stop();
-    		return false;
-    	}
-        body.add(getNext());
-        //dirs.add(0);//Divide
-        if (buffer>0) buffer-=1;
-        else {
-        	body.removeFirst();
-        	//dirs.removeFirst();
+    Snake(Integer[] ps,IObjFactory fact,IIntellect intel,char ico) {
+        this.fact=fact;
+        this.ico=ico;
+        this.intel=intel;
+        for(int i=0;i<ps.length;i+=2) {
+            getBody().add(new Point(ps[i],ps[i+1]));//TODO Make dir and intel number 
         }
-    	next=null;
-        return true;
     }
     
-    public void stop() {
-    	isMoving=false;
+    @Override
+    Point[] getLocs() {
+        return getBody().toArray(new Point[getBody().size()]);
     }
-    
-    public void start() {
-    	isMoving=true;
+
+    @Override
+    public char getIcon() {
+        return ico;
     }
-    
-    public void grow(int val) {
-    	buffer+=val;
+
+    @Override
+    void tick() {
+        if (!isMoving || !isAlive) return;
+        
+        if (body.contains(getNext())) {
+            stop();
+            die();
+            fact.utilize(this);
+            return;
+        }
+        body.add(getNext());
+        next=null;
+        if(buffer>0) {
+            buffer-=1;            
+        }else {
+            body.removeFirst();
+        }
+        next=null;
     }
-    
-    public Point getNext() {
-    	if(next == null) {
-	    	Point d=dir.getDir();
-	    	next=new Point(getHead().x+d.x,getHead().y+d.y);
-    	}
-    	return next;
+
+    @Override
+    boolean interact(Snake snake, Point p) {
+        return false;
+    }
+
+    public void setBody(LinkedList<Point> membs) {
+        this.body = membs;
     }
     public List<Point> getBody(){
         return body;
-    }
-    
-    public Direction getDir() {
-        return dir;
     }
     
     public boolean isMoving(){
         return isMoving;
     }
     
+    public void stop() {
+        isMoving=false;
+    }
+    
+    public void start() {
+        isMoving=true;
+    }
+    
+    public void die() {
+        isAlive=false;
+    }
+    
+    public boolean isAlive() {
+        return isAlive;
+    }
+    
+    public void grow(int val) {
+        buffer+=val;
+    }
+    
+    public Point getNext() {
+        if(next == null) {
+            Point d=getDir().getDir();
+            next=new Point(getHead().x+d.x,getHead().y+d.y);
+        }
+        return next;
+    }
+    
+    public Direction getDir() {
+        return intel.getDir();
+    }
+    
     public void setNext(Point newNext) {
-    	next=newNext;
+        next=newNext;
     }
     
     public Point getHead() {
-    	return body.getLast();
+        return body.getLast();
     }
-}
+    
 
-	
+}

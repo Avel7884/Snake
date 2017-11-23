@@ -1,6 +1,6 @@
 package SnakeConsole;
 
-import java.io.BufferedReader;
+/*import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,7 +11,6 @@ import SnakeCore.StateParser;
 
 public class Program {
 	static GameState game= StateParser.makeGame(".\\levels\\Die.txt");
-	
 	public static void main(String[] arguments ) throws IOException {
 		 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	     System.out.println("Hello, User"); 
@@ -28,16 +27,7 @@ public class Program {
 	            System.err.println("Invalid Format!");
 	        }
 		 }
-	     /*
-		 Timer timer =new Timer();
-		 
-		 timer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-				  Tick();
-			  }
-			}, (long)1000 , (long)1000);
-		*/
 	 }
 	 
 }
+		*/

@@ -6,10 +6,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-// import java.util.Map;
 
 public class GameState {
-    private Snake snake;
+    private SnakeFactory snakes;
     private char[][] maze;
     private char[][] map;
     private Random rnd;
@@ -21,13 +20,14 @@ public class GameState {
     private HashMap<String, IObjFactory> dic;
     {
         dic = new HashMap<String, IObjFactory>();
+        dic.put("Snake", new SnakeFactory());
         dic.put("Food", new FoodFactory());
-        dic.put("Hedg", new HedgFactory());
-        dic.put("Teleport", new TeleportFactory());
-        dic.put("Pillow", new PillowFactory());
+        //dic.put("Hedg", new HedgFactory());
+        //dic.put("Teleport", new TeleportFactory());
+        //dic.put("Pillow", new PillowFactory());
     }
 
-    public GameState(char[][] maze, Point[] snakePos, Direction snakeDir,
+    public GameState(char[][] maze,
             ArrayList<Tuple<String, Integer[]>> objsCreators) {
         isAlive = true;
         this.maze = maze;
@@ -35,9 +35,11 @@ public class GameState {
         rnd = new Random();
         height = maze.length;
         width = maze[0].length;// bad
-        snake = new Snake(snakePos, snakeDir.getDirN());
+        snakes = (SnakeFactory) dic.get("Snake");
         for (Tuple<String, Integer[]> tup : objsCreators) {
-            setObjs(dic.get(tup.getX()).configure(this, tup.getY()));
+            try {
+                setObjs(dic.get(tup.getX()).configure(this, tup.getY()));
+            } catch (NullPointerException e) {};
         }
     }
 
@@ -45,9 +47,11 @@ public class GameState {
     public char[][] getMap() {
         for (int i = 0; i < map.length; i++)
             map[i] = maze[i].clone();
-        for (int i = 0; i < snake.getBody().size(); i++) {
-            Point p = snake.getBody().get(i);
-            map[p.y][p.x] = '@';
+        for (Snake snake:snakes.getProducts()) {
+            for (int i = 0; i < snake.getBody().size(); i++) {
+                Point p = snake.getBody().get(i);
+                map[p.y][p.x] = '@';
+            }
         }
 
         for (int i = 0; i < getObjsArr().size(); i++) {
@@ -65,19 +69,28 @@ public class GameState {
     public boolean makeTick() {
         if (!isAlive)
             return false;
-        tickObjs();
         tickFactorys();
-
-        if (!snake.isMoving())
-            return true;
-        Point next = collise();
-        if (maze[next.y][next.x] == '+' || (maze[next.y][next.x] == '.' && snake.makeStep()))
-            return true;
-        else
-            return die();
+        for(Snake snake:snakes.getProducts()) {
+            if (!snake.isMoving() || !snake.isAlive()) {
+                continue;
+            }
+            Snake bump=detectBumps(snake);
+            if (bump!=null && bump.isMoving()) {
+                bump.die();
+                snake.die();
+                continue;
+            }
+            Point next = collise(snake);
+            if (next!=null && maze[next.y][next.x] != '.') {//maze[next.y][next.x] == '+' || //TODO
+                snake.die();
+            }
+        }
+        cleanSnakes();
+        tickObjs();
+        return true;
     }
 
-    private Point collise() {
+    private Point collise(Snake snake) {
         IObject col = objsCollision(snake.getNext());
         for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
             if (col == null) {
@@ -86,19 +99,36 @@ public class GameState {
             }
             nextTmp = (Point) snake.getNext().clone();
             if (col.interact(snake, snake.getNext())) { //TODO make interact better
-                col=null;
-                die();
+                snake.die();
+                return null;
             } else {
-                setObjs(col.getFact().utilize(col));//TODO Make it better
                 snake.setNext(getBoundedCord(snake.getNext()));
+                col = objsCollision(snake.getNext());
             }
-            col = objsCollision(snake.getNext());
         }
-        if (col != null)
+        if(col!=null) {
+            setObjs(col.getFact().utilize(col));//TODO Make it better
             objs.remove(col);
+        }
         return snake.getNext();
     }
 
+    private Snake detectBumps(Snake s) {
+        for(Snake snake:snakes.getProducts()) {
+            if(s!=snake && snake.getNext().x==s.getNext().x &&snake.getNext().y==s.getNext().y) {
+                return snake;
+            }
+        }
+        return null;
+    }
+    private void cleanSnakes() {
+        for(int i=0;i<snakes.getProducts().length;i++) {
+            if(!snakes.getProducts()[i].isAlive()) {
+                decay(snakes.getProducts()[i]);
+            }
+        }
+    }
+    
     private void tickFactorys() {
         for (IObjFactory fact : dic.values())
             setObjs(fact.tick());
@@ -108,16 +138,20 @@ public class GameState {
         for (IObject obj : objs)
             obj.tick();
     }
-
-    public boolean die() {
-        isAlive = false;
-        return false; // cuz datz kool
+    /*
+    private void tickSnakes() {
+        for(Snake snake :snakes.getProducts()) {
+            snake.tick();
+            if(!snake.isAlive()) {
+                decay(snake);
+            }
+        }
     }
+    */
 
     protected Point getBoundedCord(Point p) {
         if (!(p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)) {
             p = new Point((p.x + width) % width, (p.y + height) % height);
-            snake.setNext(p);
         }
         return p;
     }
@@ -130,31 +164,23 @@ public class GameState {
         return null;
     }
 
-    public void feedSnake(int val) {
-        snake.grow(val);
-    }
-
-
-    public boolean turnSnake(int dir) {
-        return snake.turn(new Direction(dir));
-    }
-
-    public boolean turnSnake(Point dir) {
-        return snake.turn(new Direction(dir));
-    }
-
     protected char getCell(Point p) {
         if (maze[p.y][p.x] == '#')
             return '#';
-        if (maze[p.y][p.x] == '+')
-            return '+';
-        for (Point part : snake.getBody())
-            if (part.x == p.x && part.y == p.y)
-                return '@';
+        //if (maze[p.y][p.x] == '#') //TODO
+        //    return '+';
+        for (Snake s:snakes.getProducts())
+            for (Point part : s.getBody())
+                if (part.x == p.x && part.y == p.y)
+                    return '@';
         IObject obj = objsCollision(p);
         if (obj != null)
             return obj.getIcon();
         return '.';
+    }
+    
+    public ControlIntellect getCtrlIntel() {
+        return snakes.getCtrlIntel();
     }
 
     protected Point getRndFreePoint() {
@@ -162,22 +188,6 @@ public class GameState {
         while (getCell(loc) != '.')
             loc = new Point(rnd.nextInt(width), rnd.nextInt(height));
         return loc;
-    }
-
-    protected void teleportHead(Point newHead) {
-        snake.setNext(newHead);
-    }
-
-    public Point getHead() {
-        return snake.getHead();
-    }
-
-    public Direction getSnakeDir() {
-        return snake.getDir();
-    }
-
-    public int getLenght() {
-        return snake.getBody().size();
     }
 
     protected List<IObject> getObjsArr() {
@@ -188,16 +198,22 @@ public class GameState {
         return new Point(width, height);
     }
 
-    public Snake getSnake() {
-        return snake;
-    }
-
     public void setObjs(IObject[] objs) {
         if (objs == null)
             return;
         for (IObject obj : objs) {
             this.objs.add(obj);
         }
+    }
+    public void setObj(IObject obj) {
+        this.objs.add(obj);
+    }
+    public IObjFactory getFact(String s) {
+        return dic.get(s);
+    }
+    public void decay(Snake s) {
+        setObjs(snakes.utilize(s));
+        objs.remove(s);
     }
     /*
      * private void setObjs(IObject obj) { this.objs.add(obj); }

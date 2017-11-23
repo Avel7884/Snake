@@ -1,4 +1,4 @@
-package SnakeTests;
+/*package SnakeTests;
 
 import java.awt.Point;
 import org.junit.*;
@@ -117,3 +117,4 @@ public class CoreTests extends Assert {
         } ;
     }
 }
+*/

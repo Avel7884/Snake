@@ -1,6 +1,6 @@
 package SnakeCore;
 
-import java.awt.Point;
+//import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class StateParser {
 	public static GameState makeGame(String path) {
     	
 		try(BufferedReader br = new BufferedReader(new FileReader(path));) {
-    		return new GameState(getMaze(br),getSnake(br),getDir(br),getObjs(br));	
+    		return new GameState(getMaze(br),getObjs(br));	
 		} catch (NumberFormatException|IOException e1) {
 			e1.printStackTrace();
 			return null;
@@ -37,12 +37,15 @@ public class StateParser {
 		}
 		return maze; 
 	}
-	
-	private static Point[] getSnake(BufferedReader br) throws IOException {
+	/*
+	private static Integer[] getSnake(BufferedReader br) throws IOException {
     		String[] sl = br.readLine().split(" ");
-    		Point[] snakeBody=new Point[sl.length/2];
-    		for(int i=0;i<sl.length;i+=2) {
-    			snakeBody[i/2]=new Point(Integer.parseInt(sl[i]), Integer.parseInt(sl[i+1]));
+    		Integer[] snakeBody=new Integer[sl.length];
+    		//for(int i=0;i<sl.length;i+=2) {
+    		//	snakeBody[i/2]=new Point(Integer.parseInt(sl[i]), Integer.parseInt(sl[i+1]));
+    		//}
+    		for (int i=0;i<sl.length;i+=1) {
+    		    snakeBody[i]=Integer.parseInt(sl[i]);
     		}
 		return snakeBody;
 	}
@@ -50,7 +53,7 @@ public class StateParser {
 	private static Direction getDir(BufferedReader br) throws NumberFormatException, IOException {
 		return new Direction(Integer.parseInt(br.readLine()));
 	}
-	
+	*/
 	//@SuppressWarnings("unchecked")
 	private static ArrayList<Tuple<String, Integer[]>> getObjs(BufferedReader br) throws IOException {
 		String l=br.readLine();
