@@ -35,7 +35,7 @@ public class GUI {
 	private static Image pil = new Image(display, ".\\sprites\\pil.png");
 	private static Image apple = new Image(display, ".\\sprites\\apple.gif");
 
-	private static String level=".\\levels\\FirstOne.txt";
+	private static String level=".\\levels\\Simple.txt";
 	
 	private static final String[][] FILTERS = {
             {"Все файлы (*.*)"     , "*.*"  }};

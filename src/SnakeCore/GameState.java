@@ -91,6 +91,7 @@ public class GameState {
     }
 
     private Point collise(Snake snake) {
+        snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
         for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
             if (col == null) {
@@ -165,9 +166,9 @@ public class GameState {
     }
 
     protected char getCell(Point p) {
-        if (maze[p.y][p.x] == '#')
+        if (maze[p.y][p.x] == '#' || maze[p.y][p.x] == '+')
             return '#';
-        //if (maze[p.y][p.x] == '#') //TODO
+        //if (maze[p.y][p.x] == '+') //TODO
         //    return '+';
         for (Snake s:snakes.getProducts())
             for (Point part : s.getBody())
@@ -214,6 +215,17 @@ public class GameState {
     public void decay(Snake s) {
         setObjs(snakes.utilize(s));
         objs.remove(s);
+    }
+    public boolean isSafe(Point p) {
+        char ico =getCell(p);
+        return ico =='.' || ico=='*';
+    }
+    public boolean isSafeSafe(Point p) {
+        return isSafe(p) && 
+               (isSafe(getBoundedCord(new Point(p.x+1,p.y)))||
+                isSafe(getBoundedCord(new Point(p.x-1,p.y)))||
+                isSafe(getBoundedCord(new Point(p.x,p.y+1)))||
+                isSafe(getBoundedCord(new Point(p.x,p.y-1))));
     }
     /*
      * private void setObjs(IObject obj) { this.objs.add(obj); }

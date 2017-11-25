@@ -39,22 +39,20 @@ public class Snake extends IObject {
         if (body.contains(getNext())) {
             stop();
             die();
-            fact.utilize(this);
             return;
         }
-        body.add(getNext());
+        body.add(next);
         next=null;
         if(buffer>0) {
             buffer-=1;            
         }else {
             body.removeFirst();
         }
-        next=null;
     }
 
     @Override
     boolean interact(Snake snake, Point p) {
-        return false;
+        return true;
     }
 
     public void setBody(LinkedList<Point> membs) {

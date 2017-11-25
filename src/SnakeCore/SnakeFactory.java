@@ -53,6 +53,7 @@ public class SnakeFactory extends IObjFactory{
         switch (i) {
             case 0:return getCtrlIntel();
             case 1:return new SimpleIntel();
+            case 2:return new SeekerIntellect();
             default: return null;
         }
     }

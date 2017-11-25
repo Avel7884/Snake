@@ -56,6 +56,21 @@ public class Direction {
         if (dir == 2 || dir == 4 || dir == 6 || dir == 8)
             this.dir = dir; // hte java
         else
-            this.dir = 1 / 0;
+            throw new IllegalArgumentException();
+    }
+    
+    public Direction nextDir() {
+        switch (dir) {
+            case 6:
+                return new Direction(2);
+            case 4:
+                return new Direction(8);
+            case 2:
+                return new Direction(4);
+            case 8:
+                return new Direction(6);
+            default:
+                throw new ArithmeticException();
+        }
     }
 }

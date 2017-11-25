@@ -17,9 +17,9 @@ public class SimpleIntel implements IIntellect {
     public Direction getDir() {
         Point head=snake.getHead();
         int count=0;
-        Point p=new Point(head.x+dir.getDir().x,head.y+dir.getDir().y);
-        while(count<5 && game.getCell(p)!='.') {
-            dir=new Direction(dir.getDirN()+2);
+        Point p=game.getBoundedCord(new Point(head.x+dir.getDir().x,head.y+dir.getDir().y));
+        while(count<5 && !game.isSafe(p)) {
+            dir=dir.nextDir();
             count+=1;
         }
         return dir;
