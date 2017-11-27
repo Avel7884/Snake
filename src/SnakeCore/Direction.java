@@ -73,4 +73,8 @@ public class Direction {
                 throw new ArithmeticException();
         }
     }
+    
+    public void setErrorDir(int dir) {
+    	this.dir = dir;
+    }
 }
