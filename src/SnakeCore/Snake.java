@@ -33,8 +33,9 @@ public class Snake extends IObject {
     }
 
     @Override
-    void tick() {
-        if (!isMoving || !isAlive) return;
+    public void tick() {
+        if (!isMoving || !isAlive) 
+        	return;
         
         if (body.contains(getNext())) {
             stop();
@@ -51,7 +52,7 @@ public class Snake extends IObject {
     }
 
     @Override
-    boolean interact(Snake snake, Point p) {
+    public boolean interact(Snake snake, Point p) {
         return true;
     }
 
@@ -105,6 +106,12 @@ public class Snake extends IObject {
     public Point getHead() {
         return body.getLast();
     }
+    public int getBuffer() {
+    	return buffer;
+    }
     
+    public void setAlive(boolean b) {
+    	isAlive = b;
+    }
 
 }

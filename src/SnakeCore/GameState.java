@@ -90,7 +90,7 @@ public class GameState {
         return true;
     }
 
-    private Point collise(Snake snake) {
+    public Point collise(Snake snake) {
         snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
         for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
@@ -150,7 +150,7 @@ public class GameState {
     }
     */
 
-    protected Point getBoundedCord(Point p) {
+    public Point getBoundedCord(Point p) {
         if (!(p.x >= 0 && p.x < width && p.y >= 0 && p.y < height)) {
             p = new Point((p.x + width) % width, (p.y + height) % height);
         }
@@ -230,6 +230,12 @@ public class GameState {
     /*
      * private void setObjs(IObject obj) { this.objs.add(obj); }
      */
+    public Snake[] getSnake() {
+    	return snakes.getProducts();
+    }
+    public void setIsAlive(boolean b) {
+    	isAlive = b;
+    }
 }
 
 
