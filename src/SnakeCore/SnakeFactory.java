@@ -19,8 +19,10 @@ public class SnakeFactory extends IObjFactory{
         Iterator<Point> itr = Arrays.stream(ps).iterator();
         while (itr.hasNext()) {
             Point t=itr.next();//TODO need to do Something
+            /*
             if (t.x==-1)
                 return null;
+            */
         }
         return null;
     }

@@ -34,10 +34,8 @@ public class Direction {
                 return new Point(-1, 0);
             case 2:
                 return new Point(0, 1);
-            case 8:
-                return new Point(0, -1);
             default:
-                throw new ArithmeticException();
+                return new Point(0, -1);
         }
     }
 
@@ -67,10 +65,8 @@ public class Direction {
                 return new Direction(8);
             case 2:
                 return new Direction(4);
-            case 8:
-                return new Direction(6);
             default:
-                throw new ArithmeticException();
+                return new Direction(6);
         }
     }
     

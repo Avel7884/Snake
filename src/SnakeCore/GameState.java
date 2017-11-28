@@ -47,12 +47,14 @@ public class GameState {
     public char[][] getMap() {
         for (int i = 0; i < map.length; i++)
             map[i] = maze[i].clone();
+        /*
         for (Snake snake:snakes.getProducts()) {
             for (int i = 0; i < snake.getBody().size(); i++) {
                 Point p = snake.getBody().get(i);
                 map[p.y][p.x] = '@';
             }
         }
+        *///TODO
 
         for (int i = 0; i < getObjsArr().size(); i++) {
             Point[] ps = getObjsArr().get(i).getLocs();
@@ -95,22 +97,23 @@ public class GameState {
         IObject col = objsCollision(snake.getNext());
         for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
             if (col == null) {
-                snake.setNext(getBoundedCord(snake.getNext()));
-                return snake.getNext();
+                break;
             }
             nextTmp = (Point) snake.getNext().clone();
             if (col.interact(snake, snake.getNext())) { //TODO make interact better
                 snake.die();
                 return null;
-            } else {
+            }/* else {
                 snake.setNext(getBoundedCord(snake.getNext()));
                 col = objsCollision(snake.getNext());
-            }
+            }*/
         }
+        /*//TODO
         if(col!=null) {
             setObjs(col.getFact().utilize(col));//TODO Make it better
             objs.remove(col);
-        }
+        }*/
+        snake.setNext(getBoundedCord(snake.getNext()));
         return snake.getNext();
     }
 

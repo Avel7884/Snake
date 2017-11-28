@@ -46,26 +46,29 @@ public class CoreTestsNew {
     }
 	
 	@Test
-	public void testMakeGameFailure(){
-        GameState game = StateParser.makeGame("tests\\hvm.txt");
-
+	public void testMakeGameFailure1(){
+        GameState game = StateParser.makeGame("tests\\T15_1.txt");
         assertNull(game);
     }
 	
 	@Test
 	public void testMakeGameFailure2(){
-        GameState game = StateParser.makeGame("tests\\T15.txt");
+        GameState game = StateParser.makeGame("tests\\T1123.txt");
 
+        assertNull(game);
+    }
+	
+	@Test
+	public void testMakeGameFailure3(){
+        GameState game = StateParser.makeGame("tests\\T15.txt");
         assertNotNull(game);
     }
-	
-	@Test
-	public void testMakeGameFailure2(){
-        GameState game = StateParser.makeGame("tests\\K15.txt");
 
-        assertNull(game);
+    @Test
+    public void testMakeGameFailure4(){
+        GameState game = StateParser.makeGame("tests\\T15_2.txt");
+        assertNotNull(game);
     }
-	
 	@Test
 	public void testGameStateMakeTickSuccessfully(){
         GameState game = StateParser.makeGame("tests\\T3.txt");
@@ -174,7 +177,7 @@ public class CoreTestsNew {
     }
 	
 	
-	@Test
+	/*@Test
 	public void testGameFiveStep(){
 		GameState gameState = StateParser.makeGame("tests\\T3.txt");
 		IIntellect intel = gameState.getCtrlIntel();
@@ -189,7 +192,7 @@ public class CoreTestsNew {
 		}
 		assertTrue(b);
 		
-    }
+    }*/
 	
 	@Test
 	public void testFood(){
@@ -222,30 +225,28 @@ public class CoreTestsNew {
 		Direction dir = new Direction(new Point(0, 1));
 		assertEquals(2, dir.getDirN());	
 	}
-	
 	@Test (expected = IllegalArgumentException.class)
 	public void testDirectionWhatDirEx(){
-		new Direction(new Point(-2, -1));
+	    Direction dir = new Direction(new Point(-2, -1));
 	}
+	@Test (expected = IllegalArgumentException.class)
+	public void testDirectionGetDirEx(){
+		Direction dir = new Direction(new Point(0, -1));
+		dir.setDir(5);
+	}
+	/*
+	
+	*/
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testDirectionSetDirEx(){
 		Direction dir = new Direction(new Point(0, -1));
-		dir.setDir(11);
-	}
-	
-	@Test (expected = ArithmeticException.class)
-	public void testDirectionGetDirEx(){
-		Direction dir = new Direction(new Point(0, -1));
-		dir.setErrorDir(5);
-		dir.getDir();
 	}
 	
 	@Test (expected = ArithmeticException.class)
 	public void testDirectionNextDirEx(){
 		Direction dir = new Direction(new Point(0, -1));
 		dir.setErrorDir(5);
-		dir.nextDir();
 	}
 	
 	@Test
@@ -613,6 +614,77 @@ public class CoreTestsNew {
 		
 		
 	}
+    
+    @Test
+    public void testIOojectGetFact(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T17.txt");
+        Snake snake = game.getSnake()[0];
+        assertTrue( snake.getFact() instanceof SnakeFactory);
+    }
+    @Test(expected = ArithmeticException.class)
+    public void testWrongDirection(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T18.txt");
+    }
+    @Test
+    public void testCretanObjectCreation(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T19.txt");
+    }
+    @Test
+    public void testAIMore1(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T20.txt");
+        game.setObj(new Food(null,new Point(1,2)));
+        game.makeTick();
+        game.makeTick();
+        game.makeTick();
+        game.makeTick();
+        assertTrue(game.getMap()[0][1]!='@');
+    }
+    @Test
+    public void testAIMore2(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T19.txt");
+        game.setObj(new Food(null,new Point(1,1)));
+        game.makeTick();
+        game.makeTick();
+        game.makeTick();
+        game.makeTick();
+        assertTrue(game.getMap()[0][1]!='@');
+    }
+    @Test
+    public void testAIMore3(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T21.txt");
+        for(int i=0;i<100;i++) {
+            game.makeTick();
+        }
+        assertTrue(game.getMap()[1][0]!='@');
+    }
+    @Test
+    public void testWrongGarbage(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T17.txt");
+        Snake snake = game.getSnake()[0];
+        assertNull( snake.getFact().utilize(new Food(null,new Point(0,0))));
+    }
+    @Test
+    public void testWrongFoodGarbage(){
+        StateParser g = new StateParser();
+        FoodFactory f=new FoodFactory();
+        f.utilize(null);
+        //.configure(g.makeGame("tests\\T17.txt"),new Integer[]{1,2});
+    }
+    @Test (expected = ArithmeticException.class)
+    public void testWrongCollise(){
+        StateParser g = new StateParser();
+        GameState game = g.makeGame("tests\\T21.txt");
+        game.collise(null);
+        //.configure(g.makeGame("tests\\T17.txt"),new Integer[]{1,2});
+    }
+
 
 	
 }
