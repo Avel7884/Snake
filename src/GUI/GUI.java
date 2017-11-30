@@ -23,7 +23,7 @@ public class GUI {
 	private static Display display = new Display();
 	private static Shell shell = new Shell(display);
 	private static GameState gameState;
-    private static ControlIntellect intel;
+    private static ControlIntellect[] intel;
 	private static Font font = new Font(display,"Arial",14,SWT.BOLD | SWT.ITALIC);
 	private static boolean flag = false;
 	private static Image hedgA = new Image(display, ".\\sprites\\hedgA.png");
@@ -196,17 +196,29 @@ public class GUI {
 			 	 		break;
 			 	 		*/
 					case(SWT.KEYPAD_4):
-						intel.setDir(4);
+						intel[0].setDir(4);
 						break;
 					case(SWT.KEYPAD_6):
-					    intel.setDir(6);
+					    intel[0].setDir(6);
 						break;
 					case(SWT.KEYPAD_2):
-					    intel.setDir(2);
+					    intel[0].setDir(2);
 						break;
 					case(SWT.KEYPAD_8):
-					    intel.setDir(8);
+					    intel[0].setDir(8);
 						break;
+                    case('a'):
+                        intel[1].setDir(4);
+                        break;
+                    case('d'):
+                        intel[1].setDir(6);
+                        break;
+                    case('s'):
+                        intel[1].setDir(2);
+                        break;
+                    case('w'):
+                        intel[1].setDir(8);
+                        break;
 				}
 					
 				

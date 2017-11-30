@@ -3,6 +3,7 @@ package SnakeCore;
 public class ControlIntellect implements IIntellect {
 
     private Direction dir;
+    private Snake snake;
     @Override
     public void init(GameState game,Direction dir) {
         this.dir=dir;
@@ -23,9 +24,13 @@ public class ControlIntellect implements IIntellect {
         if ( this.dir.isOpposit(newdir)) return;
         this.dir=newdir;
     }
+    
+    public Snake getSnake() {
+        return snake;
+    }
 
     @Override
     public void setSnake(Snake snake) {
-        return;
+        this.snake = snake;
     }
 }

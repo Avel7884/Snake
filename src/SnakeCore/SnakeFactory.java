@@ -11,14 +11,14 @@ public class SnakeFactory extends IObjFactory{
     //private GameState game;
     private FoodFactory foodFact;
     private List<Snake> snakes=new ArrayList<Snake>();
-    private ControlIntellect mainIntel;
+    private ControlIntellect[] mainIntels;
 
     @Override
     public Snake[] create(GameState game, Point[] ps) {
         //this.game = game;
         Iterator<Point> itr = Arrays.stream(ps).iterator();
         while (itr.hasNext()) {
-            Point t=itr.next();//TODO need to do Something
+            //Point t=itr.next();//TODO need to do Something
             /*
             if (t.x==-1)
                 return null;
@@ -53,18 +53,29 @@ public class SnakeFactory extends IObjFactory{
     
     private IIntellect getIntel(int i) {
         switch (i) {
-            case 0:return getCtrlIntel();
+            case 0:return getFreeCtrlIntel();
             case 1:return new SimpleIntel();
             case 2:return new SeekerIntellect();
             default: return null;
         }
     }
     
-    public ControlIntellect getCtrlIntel() {
-        if(mainIntel==null) {
-            mainIntel=new ControlIntellect();
+    public ControlIntellect[] getCtrlIntel() {
+        if(mainIntels ==null) {
+            mainIntels=new ControlIntellect[5];
+            for(int i=0;i<5;i++)
+                mainIntels[i]=new ControlIntellect();
         }
-        return mainIntel;
+        return mainIntels;
+    }
+    
+    private ControlIntellect getFreeCtrlIntel() {
+        for(ControlIntellect intel:getCtrlIntel()) {
+            if(intel.getSnake() == null) {
+                return intel;
+            }
+        }
+        throw new NullPointerException("No free ControlIntellect to connect with snake.");
     }
     
     @Override

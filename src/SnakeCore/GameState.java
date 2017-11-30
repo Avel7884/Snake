@@ -37,9 +37,7 @@ public class GameState {
         width = maze[0].length;// bad
         snakes = (SnakeFactory) dic.get("Snake");
         for (Tuple<String, Integer[]> tup : objsCreators) {
-            try {
                 setObjs(dic.get(tup.getX()).configure(this, tup.getY()));
-            } catch (NullPointerException e) {};
         }
     }
 
@@ -73,29 +71,25 @@ public class GameState {
             return false;
         tickFactorys();
         for(Snake snake:snakes.getProducts()) {
-            if (!snake.isMoving() || !snake.isAlive()) {
+            if (!snake.isMoving() || 
+                !snake.isAlive() || 
+                killCrashed(snake)) {
                 continue;
             }
-            Snake bump=detectBumps(snake);
-            if (bump!=null && bump.isMoving()) {
-                bump.die();
-                snake.die();
-                continue;
-            }
-            Point next = collise(snake);
-            if (next!=null && maze[next.y][next.x] != '.') {//maze[next.y][next.x] == '+' || //TODO
-                snake.die();
-            }
+            collise(snake);
         }
         cleanSnakes();
         tickObjs();
         return true;
-    }
-
+    } 
+    /*
     public Point collise(Snake snake) {
         snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
-        for (Point nextTmp = null; nextTmp==null || (nextTmp.x != snake.getNext().x && nextTmp.y != snake.getNext().y);) {
+        for (Point nextTmp = null; 
+                nextTmp==null || 
+                        (nextTmp.x != snake.getNext().x && 
+                         nextTmp.y != snake.getNext().y);) {
             if (col == null) {
                 break;
             }
@@ -103,28 +97,48 @@ public class GameState {
             if (col.interact(snake, snake.getNext())) { //TODO make interact better
                 snake.die();
                 return null;
-            }/* else {
+            } else {
                 snake.setNext(getBoundedCord(snake.getNext()));
                 col = objsCollision(snake.getNext());
-            }*/
+            }
         }
-        /*//TODO
         if(col!=null) {
             setObjs(col.getFact().utilize(col));//TODO Make it better
             objs.remove(col);
-        }*/
+        }
         snake.setNext(getBoundedCord(snake.getNext()));
         return snake.getNext();
     }
+    */
+    public void collise(Snake snake) {
+        snake.setNext(getBoundedCord(snake.getNext()));
+        IObject col = objsCollision(snake.getNext());
+        if (col == null) {
+            if (maze[snake.getNext().y][snake.getNext().x] != '.') {//maze[next.y][next.x] == '+' || //TODO
+                snake.die();
+            }        
+        }else if (col.interact(snake, snake.getNext())) { //TODO make interact better
+            snake.die();
+        } else {
+            setObjs(col.getFact().utilize(col));//TODO Make it better
+            objs.remove(col);
+        }
+    }
 
-    private Snake detectBumps(Snake s) {
-        for(Snake snake:snakes.getProducts()) {
-            if(s!=snake && snake.getNext().x==s.getNext().x &&snake.getNext().y==s.getNext().y) {
-                return snake;
+    private boolean killCrashed(Snake snake1) {
+        for(Snake snake2:snakes.getProducts()) {
+            if(snake1!=snake2 && 
+               snake1.getNext().x==snake2.getNext().x && 
+               snake1.getNext().y==snake2.getNext().y && 
+               snake2.isMoving()) {
+                snake1.die();
+                snake2.die();
+                return true;
             }
         }
-        return null;
+        return false;
     }
+    
     private void cleanSnakes() {
         for(int i=0;i<snakes.getProducts().length;i++) {
             if(!snakes.getProducts()[i].isAlive()) {
@@ -183,7 +197,7 @@ public class GameState {
         return '.';
     }
     
-    public ControlIntellect getCtrlIntel() {
+    public ControlIntellect[] getCtrlIntel() {
         return snakes.getCtrlIntel();
     }
 

@@ -44,13 +44,6 @@ public class CoreTestsNew {
      
         assertEquals(maze, result.getMap());
     }
-	
-	@Test
-	public void testMakeGameFailure1(){
-        GameState game = StateParser.makeGame("tests\\T15_1.txt");
-        assertNull(game);
-    }
-	
 	@Test
 	public void testMakeGameFailure2(){
         GameState game = StateParser.makeGame("tests\\T1123.txt");
@@ -100,6 +93,13 @@ public class CoreTestsNew {
 
         assertEquals(maze, result);
     }
+    
+    @Test
+    public void testMakeGameFailure1(){
+        GameState game = StateParser.makeGame("tests\\T22.txt");
+        assertNull(game);
+    }
+    
 	
 	@Test
 	public void testGameStateMakeTickIsNotAlive(){
@@ -167,6 +167,7 @@ public class CoreTestsNew {
 	
 	
 	
+	/*
 	@Test
 	public void testGameOneStep(){
 		GameState gameState = StateParser.makeGame("tests\\T3.txt");
@@ -175,9 +176,8 @@ public class CoreTestsNew {
 		assertTrue(b);
 		
     }
-	
-	
-	/*@Test
+
+    @Test
 	public void testGameFiveStep(){
 		GameState gameState = StateParser.makeGame("tests\\T3.txt");
 		IIntellect intel = gameState.getCtrlIntel();
@@ -192,7 +192,8 @@ public class CoreTestsNew {
 		}
 		assertTrue(b);
 		
-    }*/
+    }
+    */
 	
 	@Test
 	public void testFood(){

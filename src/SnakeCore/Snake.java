@@ -76,6 +76,7 @@ public class Snake extends IObject {
     }
     
     public void die() {
+        isMoving=false;
         isAlive=false;
     }
     
