@@ -31,7 +31,7 @@ import org.junit.Test;
 
 public class CoreTestsNew {
 
-	@Test
+	/*@Test
     public void testMakeGameSuccessfully(){
 		StateParser game = new StateParser();
         GameState result = game.makeGame("tests\\T4.txt");
@@ -177,24 +177,7 @@ public class CoreTestsNew {
 		
     }
 
-    @Test
-	public void testGameFiveStep(){
-		GameState gameState = StateParser.makeGame("tests\\T3.txt");
-		IIntellect intel = gameState.getCtrlIntel();
-		boolean b = true;
-		for (int i =0; i < 5; i++) {
-			b = gameState.makeTick();
-			if (b)
-			{
-				break;
-			}
-			
-		}
-		assertTrue(b);
-		
-    }
-    */
-	
+   
 	@Test
 	public void testFood(){
 		FoodFactory f = new FoodFactory();
@@ -235,9 +218,7 @@ public class CoreTestsNew {
 		Direction dir = new Direction(new Point(0, -1));
 		dir.setDir(5);
 	}
-	/*
 	
-	*/
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void testDirectionSetDirEx(){
@@ -687,5 +668,5 @@ public class CoreTestsNew {
     }
 
 
-	
+	*/
 }
