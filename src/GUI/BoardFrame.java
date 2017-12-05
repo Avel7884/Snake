@@ -31,23 +31,29 @@ public class BoardFrame extends JFrame {
 	        newMenu.setFont(font);
 	        fileMenu.add(newMenu);
 	        
-	        JMenuItem lvl1 = new JMenuItem("Lvl 1");
-	        lvl1.setFont(font);
-	        lvl1.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	board.initMap(".\\levels\\Simple.txt");
-	            }
-	        });
-	        newMenu.add(lvl1);
+	        JMenu colorMenu = new JMenu("Choose color");
+	        colorMenu.setFont(font);
+	        fileMenu.add(colorMenu);
 	        
-	        JMenuItem lvl2 = new JMenuItem("Lvl 2");
-	        lvl2.setFont(font);
-	        lvl2.addActionListener(new ActionListener() {
-	            public void actionPerformed(ActionEvent e) {
-	            	board.initMap(".\\levels\\Simple2.txt");
-	            }
-	        });
-	        newMenu.add(lvl2);
+	        JMenu snake1 = new JMenu("Snake 1");
+	        snake1.setFont(font);
+	        colorMenu.add(snake1);
+	        
+	        addColor(snake1, "Blue", "blue", font, 1);
+	        addColor(snake1, "Red", "red", font, 1);
+	        addColor(snake1, "Green", "green", font, 1);
+	        
+	        JMenu snake2 = new JMenu("Snake 2");
+	        snake2.setFont(font);
+	        colorMenu.add(snake2);
+	        
+	        addColor(snake2, "Blue", "blue", font, 2);
+	        addColor(snake2, "Red", "red", font, 2);
+	        addColor(snake2, "Green", "green", font, 2);
+
+	        addLvl(font, "Lvl 1", ".\\levels\\Simple.txt", newMenu);
+	        addLvl(font, "Lvl 2", ".\\levels\\Simple2.txt", newMenu);
+	        
 	         
 	        fileMenu.addSeparator();
 	         
@@ -61,10 +67,8 @@ public class BoardFrame extends JFrame {
 	            }           
 	        });
 	         
-	        menuBar.add(fileMenu);
-	        setJMenuBar(menuBar);
-
-	        
+	        menuBar.add(fileMenu);      
+	        setJMenuBar(menuBar);     
 	        setResizable(false);
 	        pack();
 
@@ -73,6 +77,27 @@ public class BoardFrame extends JFrame {
 	        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    }
 	 
-	 
+	 	public void addColor(JMenu colorMenu, String name, String color, Font font, int n) {
+	 		JMenuItem col = new JMenuItem(name);
+	        col.setFont(font);
+	        col.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	board.setColor(color, n);
+	            }
+	        });
+	        colorMenu.add(col);
+	        
+	 	}
+	 	
+	 	public void addLvl(Font font, String name, String path, JMenu newMenu) {
+	 		JMenuItem lvl = new JMenuItem(name);
+	        lvl.setFont(font);
+	        lvl.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	            	board.initMap(path);
+	            }
+	        });
+	        newMenu.add(lvl);
+	 	}
 
 }

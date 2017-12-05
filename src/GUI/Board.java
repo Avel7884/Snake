@@ -38,12 +38,30 @@ public class Board extends JPanel {
 	private ControlIntellect[] intel;
 	private boolean flag = false;
 	
+	private boolean pause = false;
 	
 	private Craft apple;
 	private Craft wall;
 	private Craft background;
 	private Craft snake1;
 	private Craft snake2;
+	
+	private String color1 = "green";
+	private String color2 = "red";
+	
+	public void setColor(String color, int i) {
+		if (i == 1) {
+			color1 = color;
+		}
+		else {
+			color2 = color;
+		}
+		
+	}
+	
+	public boolean isPause() {
+		return pause;
+	}
      
     public Board() {//createGUI() {
         
@@ -51,7 +69,7 @@ public class Board extends JPanel {
         setBackground(Color.BLACK);
         setFocusable(true);
                 
-        initMap(".\\levels\\Simple.txt");
+        initMap(".\\levels\\Simple2.txt");
 
         setPreferredSize(new Dimension(1120, 600));
         
@@ -72,7 +90,7 @@ public class Board extends JPanel {
 		map = gameState.getMap();
     }
     
-
+   
     
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -85,7 +103,7 @@ public class Board extends JPanel {
         }*/
         if (!flag) {
         	drawMap(g);
-        	drawSnakesOnBoard(g);
+        	drawSnakeStep(g);
         }
         else {
         	drawEnd(g);
@@ -127,6 +145,9 @@ public class Board extends JPanel {
    
     
     public boolean makeTick() {
+    	if (pause) {
+    		return true;
+    	}
 		if (!gameState.makeTick())
 		{
 			flag = true;
@@ -139,25 +160,25 @@ public class Board extends JPanel {
 		
 	}
     
-    void drawSnakesOnBoard(Graphics g) {
+    void drawSnakeStep(Graphics g) {
+    	//char[][] newMap = gameState.getMap();
+    	//for (int i = 4; i > 0; i--) {
+    		drawSnakesOnBoard(g, 1);
+    	//}
+    	
+    }
+    
+    void drawSnakesOnBoard(Graphics g, int step) {
     	Graphics2D g2d = (Graphics2D) g;
     	if (snakes[0].isAlive()) {
-    		drawSnake(snakes[0], g2d, snake1, "green");
-    		/*List<Point> body = snakes[0].getBody();
-    		for (int i = 0; i < body.size(); i++) {
-    			draw2D(body.get(i).x, body.get(i).y, g2d, snake1);
-        	}*/
+    		drawSnake(snakes[0], g2d, snake1, color1, step);
     	}
     	if (snakes[1].isAlive()) {
-    		drawSnake(snakes[1], g2d, snake2, "green");
-    		/*List<Point> body = snakes[1].getBody();
-    		for (int i = 0; i < body.size(); i++) {
-    			draw2D(body.get(i).x, body.get(i).y, g2d, snake2);
-        	}*/
+    		drawSnake(snakes[1], g2d, snake2, color2, step);
     	}
     }
     
-    public void drawSnake(Snake snake, Graphics2D g2d, Craft pic, String color) {
+    public void drawSnake(Snake snake, Graphics2D g2d, Craft pic, String color, int step) {
     	List<Point> body = snake.getBody();
     	for (int i = 0; i < body.size(); i++) {
     		if (i == 0){
@@ -193,17 +214,25 @@ public class Board extends JPanel {
     	case 6:
     		return "\\24.png";
     	default:
-    		if (dir1 == 4 || dir2 == 4) {
+    		if (dir1 == 4  && dir2 == 6 || dir2 == 4 && dir1 == 6) {
     			return "\\46.png";
     		}
     		return "\\28.png";
+    		
     	}
     }
     
     public int determineDirection(Point p0, Point p1) {
-    	if (p0.y == p1.y  && (p0.x > p1.x  || (p0.x == map[0].length - 1 && p1.x == 0))) { return 4; }
-    	if (p0.y == p1.y && (p0.x < p1.x || (p0.x == 0 && p1.x == map[0].length - 1)) ) { return 6; }
-    	if ((p0.y > p1.y || (p1.y == map.length - 1 && p0.y == 0)) && p0.x == p1.x ) { return 8; }
+    	int x_e = map[0].length - 1;
+    	int y_e = map.length - 1;
+    	if (p0.y == p1.y  && ((p0.x > p1.x && !(p0.x == map[0].length - 1 && p1.x == 0))  
+    			|| (p1.x == map[0].length - 1 && p0.x == 0))) { 
+    		return 4; }
+    	if (p0.y == p1.y ) { 
+    		return 6; }
+    	if (p0.x == p1.x && ((p0.y > p1.y && !(p0.y == map.length - 1 && p1.y == 0))
+    			|| (p1.y == map.length - 1 && p0.y == 0)) ) { 
+    		return 8; }
     	return 2;
     }
     
@@ -244,6 +273,9 @@ public class Board extends JPanel {
                 break;
             case(KeyEvent.VK_W):
                 intel[1].setDir(8);
+                break;
+            case(KeyEvent.VK_SPACE):
+                pause = !pause;
                 break;
             /*default:
             	 System.out.print(e.getKeyCode());*/
