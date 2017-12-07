@@ -2,10 +2,17 @@ package SnakeCore;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+//import java.util.stream.Stream;
 
 public class GameState {
     private SnakeFactory snakes;
@@ -69,20 +76,67 @@ public class GameState {
     public boolean makeTick() {
         if (!isAlive)
             return false;
+
+        ExecutorService service;
+        List<IActiveObject> lst = getActives();
+
+        if (lst.isEmpty()) {
+            isAlive=false;
+        }
+        
+        service = Executors.newFixedThreadPool(lst.size());
         tickFactorys();
-        for(Snake snake:snakes.getProducts()) {
-            if (!snake.isMoving() || 
-                !snake.isAlive() || 
-                killCrashed(snake)) {
-                continue;
-            }
-            collise(snake);
+        List<Future<Point>> tmp = lst.stream().map((x)->{return service.submit(()->{return collise(x);});}).collect(Collectors.toList());
+        try {
+            forab(lst,tmp,new ArrayList<Point>(Collections.nCopies(lst.size(), null)));
+        }catch(InterruptedException e1){
+            e1.printStackTrace();
+        }catch(ExecutionException e2){
+            e2.printStackTrace();
         }
         cleanSnakes();
         tickObjs();
         return true;
     } 
-    /*
+    
+    private void forab(List<IActiveObject> lst, List<Future<Point>> tmp,List<Point> asd) throws InterruptedException, ExecutionException {
+        if(lst.size()==0) {
+            return;
+        }
+        boolean b=true;
+        while(b) {
+            b=false;
+            for(int i=0;i<lst.size();i++) {
+                if(asd.get(i)!=null) {
+                    continue;
+                }else if(tmp.get(i).isDone()) {
+                    Point p=tmp.get(i).get();
+                    if(p==null) {
+                        continue;
+                    }
+                    asd.set(i,p);
+                    killCrashed(lst,asd,i);
+                }else{
+                    b=true;
+                    continue;
+                }
+            }
+        }
+        
+    }
+    
+     /*
+        ArrayList<Thread> ts = new ArrayList<Thread>();
+        for(IActiveObject snake:getActives()){
+            if (snake.isMoving() && 
+                snake.isAlive()) {
+                Thread t=new Thread(()->collise(snake));
+                ts.add(t);
+                t.start();
+                //collise(snake);
+            }
+        }
+
     public Point collise(Snake snake) {
         snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
@@ -110,7 +164,11 @@ public class GameState {
         return snake.getNext();
     }
     */
-    public void collise(Snake snake) {
+    
+    public Point collise(IActiveObject snake) {
+        if (!(snake.isAlive() && snake.isMoving())) {
+            return null;
+        }
         snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
         if (col == null) {
@@ -123,16 +181,17 @@ public class GameState {
             setObjs(col.getFact().utilize(col));//TODO Make it better
             objs.remove(col);
         }
+        return snake.isAlive() && snake.isMoving() ? snake.getNext() : null;
     }
 
-    private boolean killCrashed(Snake snake1) {
-        for(Snake snake2:snakes.getProducts()) {
-            if(snake1!=snake2 && 
-               snake1.getNext().x==snake2.getNext().x && 
-               snake1.getNext().y==snake2.getNext().y && 
-               snake2.isMoving()) {
-                snake1.die();
-                snake2.die();
+    private boolean killCrashed(List<IActiveObject> snks,List<Point> nexts,int idx) {
+        for(int i=0;i<snks.size();i++){
+            if(idx!=i && nexts.get(i)!=null &&
+               nexts.get(i).x==nexts.get(idx).x && 
+               nexts.get(i).y==nexts.get(idx).y && 
+               snks.get(i).isMoving()) {
+                snks.get(idx).die();
+                snks.get(i).die();
                 return true;
             }
         }
@@ -140,9 +199,10 @@ public class GameState {
     }
     
     private void cleanSnakes() {
-        for(int i=0;i<snakes.getProducts().length;i++) {
-            if(!snakes.getProducts()[i].isAlive()) {
-                decay(snakes.getProducts()[i]);
+        Object[] lst = getActives().toArray();
+        for(int i=0;i<lst.length;i++) {
+            if(!((IActiveObject)lst[i]).isAlive()) {
+                decay((IActiveObject)lst[i]);
             }
         }
     }
@@ -181,14 +241,18 @@ public class GameState {
                     return obj;
         return null;
     }
+    
+    private List<IActiveObject> getActives(){
+        return objs.stream().filter(IActiveObject.class::isInstance).map(IActiveObject.class::cast).collect(Collectors.toList());
+    }
 
     protected char getCell(Point p) {
         if (maze[p.y][p.x] == '#' || maze[p.y][p.x] == '+')
             return '#';
         //if (maze[p.y][p.x] == '+') //TODO
         //    return '+';
-        for (Snake s:snakes.getProducts())
-            for (Point part : s.getBody())
+        for(IActiveObject snake:getActives())
+            for (Point part : snake.getLocs())
                 if (part.x == p.x && part.y == p.y)
                     return '@';
         IObject obj = objsCollision(p);
@@ -229,8 +293,8 @@ public class GameState {
     public IObjFactory getFact(String s) {
         return dic.get(s);
     }
-    public void decay(Snake s) {
-        setObjs(snakes.utilize(s));
+    public void decay(IActiveObject s) {
+        setObjs(s.fact.utilize(s));
         objs.remove(s);
     }
     public boolean isSafe(Point p) {

@@ -46,6 +46,19 @@ public class Direction {
                 || (this.getDirN() == 6 && newDir.getDirN() == 4);
     }
 
+    public Direction getOpposit() {
+        switch (dir) {
+            case 6:
+                return new Direction(4);
+            case 4:
+                return new Direction(6);
+            case 2:
+                return new Direction(8);
+            default:
+                return new Direction(2);
+        }
+    }
+
     public int getDirN() {
         return dir;
     }

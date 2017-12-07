@@ -35,8 +35,10 @@ public final class Food extends IObject {
     public void tick() {}
 
     @Override
-    public boolean interact(Snake snake, Point p) {
-        snake.grow(1);
+    public boolean interact(IActiveObject snake, Point p) {
+        if(snake instanceof Snake) {
+            ((Snake) snake).grow(1);
+        }
         return false;
     }
 

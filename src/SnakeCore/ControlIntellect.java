@@ -4,9 +4,11 @@ public class ControlIntellect implements IIntellect {
 
     private Direction dir;
     private Snake snake;
+    private GameState game;
     @Override
     public void init(GameState game,Direction dir) {
         this.dir=dir;
+        this.game=game;
     }
 
     @Override
@@ -32,5 +34,9 @@ public class ControlIntellect implements IIntellect {
     @Override
     public void setSnake(Snake snake) {
         this.snake = snake;
+    }
+    
+    public void makeSpawn() {
+        snake.spawn(game);
     }
 }

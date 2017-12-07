@@ -606,6 +606,7 @@ public class CoreTestsNew {
 		
 	}
 	
+	/*
 	@Test
 	public void testGameStateCollision(){
 		StateParser g = new StateParser();
@@ -615,6 +616,7 @@ public class CoreTestsNew {
 		
 		
 	}
+	*/
     
     @Test
     public void testIOojectGetFact(){

@@ -8,7 +8,7 @@ public abstract class IObject {
     abstract Point[] getLocs();
 	public abstract char getIcon();
 	abstract void tick();
-	abstract boolean interact(Snake snake,Point p);
+	abstract boolean interact(IActiveObject snake,Point p);
 	public IObjFactory getFact() {
 	  return fact;
 	}

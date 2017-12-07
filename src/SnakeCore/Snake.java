@@ -4,11 +4,12 @@ import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Snake extends IObject {
+public class Snake extends IActiveObject {
     private LinkedList<Point> body =new LinkedList<Point>();
     private IIntellect intel;
     private char ico;
     private int buffer=0;
+    private Direction curDir;
     private boolean isMoving=true; 
     private boolean isAlive=true; 
     private Point next;
@@ -44,15 +45,26 @@ public class Snake extends IObject {
         }
         body.add(next);
         next=null;
+        curDir=null;
         if(buffer>0) {
             buffer-=1;            
-        }else {
+        }else if(buffer<0){
+            body.removeFirst();
+            body.removeFirst();//TODO improve!!@@!!
+            if(body.size()==1) {
+                die();
+            }
+        }else{
             body.removeFirst();
         }
     }
 
     @Override
-    public boolean interact(Snake snake, Point p) {
+    public boolean interact(IActiveObject obj, Point p) {
+        if(obj instanceof Snakeling) {
+            grow(-2*((Snakeling) obj).getLocs().length);
+            return true;
+        }
         return true;
     }
 
@@ -97,7 +109,10 @@ public class Snake extends IObject {
     }
     
     public Direction getDir() {
-        return intel.getDir();
+        if(curDir==null) {
+            curDir=intel.getDir();
+        }
+        return curDir;
     }
     
     public void setNext(Point newNext) {
@@ -107,6 +122,7 @@ public class Snake extends IObject {
     public Point getHead() {
         return body.getLast();
     }
+    
     public int getBuffer() {
     	return buffer;
     }
@@ -114,5 +130,18 @@ public class Snake extends IObject {
     public void setAlive(boolean b) {
     	isAlive = b;
     }
-
+    
+    public void spawn(GameState game) {
+        if(body.size()>3) {
+            game.setObj(new Snakeling(getTail(3),this));
+        }
+    }
+    
+    public Point[] getTail(int len) {
+        Point[] p=new Point[3];
+        for(int i=0;i<p.length;i++) {
+            p[i]=body.pollFirst();
+        }
+        return p;
+    }
 }

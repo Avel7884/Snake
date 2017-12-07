@@ -35,7 +35,7 @@ public class GUI {
 	private static Image pil = new Image(display, ".\\sprites\\pil.png");
 	private static Image apple = new Image(display, ".\\sprites\\apple.gif");
 
-	private static String level=".\\levels\\Simple.txt";
+	private static String level=".\\levels\\Snakeling.txt";
 	
 	private static final String[][] FILTERS = {
             {"Все файлы (*.*)"     , "*.*"  }};
@@ -207,6 +207,9 @@ public class GUI {
 					case(SWT.KEYPAD_8):
 					    intel[0].setDir(8);
 						break;
+                    case(SWT.KEYPAD_9):
+                        intel[0].makeSpawn();
+                        break;
                     case('a'):
                         intel[1].setDir(4);
                         break;
@@ -218,6 +221,9 @@ public class GUI {
                         break;
                     case('w'):
                         intel[1].setDir(8);
+                        break;
+                    case('e'):
+                        intel[1].makeSpawn();
                         break;
 				}
 					

@@ -8,7 +8,6 @@ public abstract class IObjFactory{
 	public abstract IObject[] create(GameState game,Point[] ps);
 	public IObject[] configure(GameState game,Integer[] args) {
 	    Point[] tmp;
-	    /*
 	    if(args[0]==-1) {
 	        tmp= new Point[(args.length-1)/2];
 	        for(int i=1;i<args.length;i+=2) {
@@ -16,7 +15,6 @@ public abstract class IObjFactory{
 	        }
 	        return create(game,tmp);
 	    }
-	    */
 	    return baseConf(game,args);
 	}
 	protected abstract IObject[] baseConf(GameState game,Integer[] args);
