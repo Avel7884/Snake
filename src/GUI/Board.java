@@ -31,8 +31,10 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel {
-	
 
+
+	private final Craft tel2;
+	private final Craft tel1;
 	private GameState gameState;
 	private char[][] map;
 	private Snake[] snakes;
@@ -79,10 +81,12 @@ public class Board extends JPanel {
         apple = new Craft(".\\sprites\\apple.gif");
         wall = new Craft(".\\sprites\\wall.png");
         crate = new Craft(".\\sprites\\wall.png");
-        pillow = new Craft(".\\sprites\\pillow.png");
+        pillow = new Craft(".\\sprites\\pil.png");
         background = new Craft(".\\sprites\\ground.jpg");
         snake1 = new Craft(".\\sprites\\snake.jpg");
         snake2 = new Craft(".\\sprites\\snake2.png");
+		tel1 = new Craft(".\\sprites\\port1.jpg");
+		tel2 = new Craft(".\\sprites\\port2.png");
 
     }
    
@@ -154,13 +158,11 @@ public class Board extends JPanel {
             case('.'):
                 drawColoredSq(e, j*sqRez, i*sqRez, sqRez - 1, SWT.COLOR_BLUE);
                 break;
-            case('P'):
-                drawSprite(e, tel1, j*sqRez, i*sqRez, sqRez);
-                break;
-            case('p'):
-                drawSprite(e, tel2, j*sqRez, i*sqRez, sqRez);
-                break;
             */
+            case('P'):
+				return tel1;
+            case('p'):
+				return tel2;
             case('#'):
                 return wall;
             case('+'):
