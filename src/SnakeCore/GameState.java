@@ -29,9 +29,9 @@ public class GameState {
         dic = new HashMap<String, IObjFactory>();
         dic.put("Snake", new SnakeFactory());
         dic.put("Food", new FoodFactory());
-        //dic.put("Hedg", new HedgFactory());
-        //dic.put("Teleport", new TeleportFactory());
-        //dic.put("Pillow", new PillowFactory());
+        dic.put("Hedg", new HedgFactory());
+        dic.put("Teleport", new TeleportFactory());
+        dic.put("Pillow", new PillowFactory());
     }
 
     public GameState(char[][] maze,
@@ -52,21 +52,10 @@ public class GameState {
     public char[][] getMap() {
         for (int i = 0; i < map.length; i++)
             map[i] = maze[i].clone();
-        /*
-        for (Snake snake:snakes.getProducts()) {
-            for (int i = 0; i < snake.getBody().size(); i++) {
-                Point p = snake.getBody().get(i);
-                map[p.y][p.x] = '@';
-            }
-        }
-        *///TODO
 
-        for (int i = 0; i < getObjsArr().size(); i++) {
-            Point[] ps = getObjsArr().get(i).getLocs();
-            char ico = getObjsArr().get(i).getIcon();
-            for (int j = 0; j < ps.length; j++) {
-                Point p = ps[j];// Проверка на пересечение
-                map[p.y][p.x] = ico;
+        for (IObject obj : getObjsArr()) {
+            for (Point p : obj.getLocs()) {
+                map[p.y][p.x] = obj.getIcon();
             }
         }
         return map;
@@ -148,7 +137,7 @@ public class GameState {
                 break;
             }
             nextTmp = (Point) snake.getNext().clone();
-            if (col.interact(snake, snake.getNext())) { //TODO make interact better
+            if (col.interact(snake, snake.getNext())) {
                 snake.die();
                 return null;
             } else {
@@ -157,7 +146,7 @@ public class GameState {
             }
         }
         if(col!=null) {
-            setObjs(col.getFact().utilize(col));//TODO Make it better
+            setObjs(col.getFact().utilize(col));
             objs.remove(col);
         }
         snake.setNext(getBoundedCord(snake.getNext()));
@@ -172,7 +161,8 @@ public class GameState {
         snake.setNext(getBoundedCord(snake.getNext()));
         IObject col = objsCollision(snake.getNext());
         if (col == null) {
-            if (maze[snake.getNext().y][snake.getNext().x] != '.') {//maze[next.y][next.x] == '+' || //TODO
+            Point p=snake.getNext();
+            if (maze[p.y][p.x] == '+' ||maze[p.y][p.x] != '.') {
                 snake.die();
             }        
         }else if (col.interact(snake, snake.getNext())) { //TODO make interact better
@@ -247,14 +237,8 @@ public class GameState {
     }
 
     protected char getCell(Point p) {
-        if (maze[p.y][p.x] == '#' || maze[p.y][p.x] == '+')
-            return '#';
-        //if (maze[p.y][p.x] == '+') //TODO
-        //    return '+';
-        for(IActiveObject snake:getActives())
-            for (Point part : snake.getLocs())
-                if (part.x == p.x && part.y == p.y)
-                    return '@';
+        if (maze[p.y][p.x] != '.')
+            return maze[p.y][p.x];
         IObject obj = objsCollision(p);
         if (obj != null)
             return obj.getIcon();
