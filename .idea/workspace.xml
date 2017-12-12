@@ -1,37 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="45aff2e7-603d-4e67-bbcb-b926b5eaddc3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/GameStateTests.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T1.txt" afterPath="$PROJECT_DIR$/test/tests/T1.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T10.txt" afterPath="$PROJECT_DIR$/test/tests/T10.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T11.txt" afterPath="$PROJECT_DIR$/test/tests/T11.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T12.txt" afterPath="$PROJECT_DIR$/test/tests/T12.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T13.txt" afterPath="$PROJECT_DIR$/test/tests/T13.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T14.txt" afterPath="$PROJECT_DIR$/test/tests/T14.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T15.txt" afterPath="$PROJECT_DIR$/test/tests/T15.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T15_1.txt" afterPath="$PROJECT_DIR$/test/tests/T15_1.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T15_2.txt" afterPath="$PROJECT_DIR$/test/tests/T15_2.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T16.txt" afterPath="$PROJECT_DIR$/test/tests/T16.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T17.txt" afterPath="$PROJECT_DIR$/test/tests/T17.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T18.txt" afterPath="$PROJECT_DIR$/test/tests/T18.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T19.txt" afterPath="$PROJECT_DIR$/test/tests/T19.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T2.txt" afterPath="$PROJECT_DIR$/test/tests/T2.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T20.txt" afterPath="$PROJECT_DIR$/test/tests/T20.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T21.txt" afterPath="$PROJECT_DIR$/test/tests/T21.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T22.txt" afterPath="$PROJECT_DIR$/test/tests/T22.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T3.txt" afterPath="$PROJECT_DIR$/test/tests/T3.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T4.txt" afterPath="$PROJECT_DIR$/test/tests/T4.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T5.txt" afterPath="$PROJECT_DIR$/test/tests/T5.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T6.txt" afterPath="$PROJECT_DIR$/test/tests/T6.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T7.txt" afterPath="$PROJECT_DIR$/test/tests/T7.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T8.txt" afterPath="$PROJECT_DIR$/test/tests/T8.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/tests/T9.txt" afterPath="$PROJECT_DIR$/test/tests/T9.txt" />
+    <list default="true" id="45aff2e7-603d-4e67-bbcb-b926b5eaddc3" name="Default" comment="deleted">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Snake.iml" afterPath="$PROJECT_DIR$/Snake.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/GUI/GUI.java" afterPath="$PROJECT_DIR$/src/GUI/GUI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SnakeCore/GameState.java" afterPath="$PROJECT_DIR$/src/SnakeCore/GameState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SnakeTests/CoreTestsNew.java" afterPath="$PROJECT_DIR$/src/SnakeTests/CoreTestsNew.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,6 +11,9 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/SnakeOfPavel$GameStateTests.coverage" NAME="GameStateTests Coverage Results" MODIFIED="1513091535455" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
@@ -86,13 +60,13 @@
       <file leaf-file-name="GameStateTests.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/GameStateTests.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="290" column="10" lean-forward="true" selection-start-line="284" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+            <state relative-caret-position="476">
+              <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5792#5793#0" expanded="true" />
-                <element signature="e#5855#5856#0" expanded="true" />
-                <element signature="e#11180#11187#0" expanded="true" />
+                <element signature="e#2446#2447#0" expanded="true" />
+                <element signature="e#2509#2510#0" expanded="true" />
+                <element signature="e#6224#6231#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -484,17 +458,26 @@
       <option name="presentableId" value="Default" />
       <updated>1513030227731</updated>
       <workItem from="1513066995110" duration="3359000" />
-      <workItem from="1513084392432" duration="6430000" />
+      <workItem from="1513084392432" duration="7129000" />
     </task>
+    <task id="LOCAL-00001" summary="Before deletion of the tests">
+      <created>1513090942045</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1513090942045</updated>
+    </task>
+    <task id="LOCAL-00002" summary="deleted">
+      <created>1513091252100</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1513091252100</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="GameStateTests - 2017.12.12 at 19h 43m 25s.xml">
-      <configuration name="GameStateTests" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="GameStateTests - 2017.12.12 at 19h 43m 39s.xml">
-      <configuration name="GameStateTests" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="GameStateTests - 2017.12.12 at 19h 44m 31s.xml">
       <configuration name="GameStateTests" configurationId="JUnit" />
     </history-entry>
@@ -510,18 +493,24 @@
     <history-entry file="GameStateTests - 2017.12.12 at 19h 52m 20s.xml">
       <configuration name="GameStateTests" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GameStateTests_testGameStateMakegetBoundedCord3 - 2017.12.12 at 19h 26m 31s.xml">
-      <configuration name="GameStateTests.testGameStateMakegetBoundedCord3" configurationId="JUnit" />
+    <history-entry file="GameStateTests - 2017.12.12 at 20h 04m 36s.xml">
+      <configuration name="GameStateTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="GameStateTests - 2017.12.12 at 20h 05m 27s.xml">
+      <configuration name="GameStateTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="GameStateTests - 2017.12.12 at 20h 05m 48s.xml">
+      <configuration name="GameStateTests" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="GameStateTests - 2017.12.12 at 20h 12m 20s.xml">
+      <configuration name="GameStateTests" configurationId="JUnit" />
     </history-entry>
     <history-entry file="GameStateTests_testSnakeGetIcon - 2017.12.12 at 19h 46m 01s.xml">
       <configuration name="GameStateTests.testSnakeGetIcon" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="GameStateTests_testSnakeInteract - 2017.12.12 at 19h 38m 08s.xml">
-      <configuration name="GameStateTests.testSnakeInteract" configurationId="JUnit" />
-    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9789000" />
+    <option name="totallyTimeSpent" value="10488000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
@@ -537,6 +526,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32786885" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.329429" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -561,6 +551,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Before deletion of the tests" />
+    <MESSAGE value="deleted" />
+    <option name="LAST_COMMIT_MESSAGE" value="deleted" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -942,13 +937,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/GameStateTests.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="290" column="10" lean-forward="true" selection-start-line="284" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
+        <state relative-caret-position="476">
+          <caret line="28" column="9" lean-forward="true" selection-start-line="28" selection-start-column="9" selection-end-line="28" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5792#5793#0" expanded="true" />
-            <element signature="e#5855#5856#0" expanded="true" />
-            <element signature="e#11180#11187#0" expanded="true" />
+            <element signature="e#2446#2447#0" expanded="true" />
+            <element signature="e#2509#2510#0" expanded="true" />
+            <element signature="e#6224#6231#0" expanded="true" />
           </folding>
         </state>
       </provider>
