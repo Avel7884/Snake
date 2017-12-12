@@ -20,7 +20,7 @@ public class GameState {
     private char[][] map;
     private Random rnd;
     private boolean isAlive;
-    private List<IObject> objs = new LinkedList<IObject>();
+    private List<IObject> objs = new LinkedList<>();
     private int height;
     private int width;
 
