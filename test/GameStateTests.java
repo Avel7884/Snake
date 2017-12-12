@@ -11,19 +11,7 @@ import java.util.LinkedList;
 
 public class GameStateTests {
 
-    @Test
-    public void testMakeGameSuccessfully(){
-        StateParser game = new StateParser();
-        GameState result = game.makeGame("test\\test\\T4.txt");
 
-        char[][] maze = {
-                {'.','.'},
-                {'.','.'},
-                {'.','.'}
-        };
-
-        assertEquals(maze, result.getMap());
-    }
     @Test
     public void testMakeGameFailure2(){
         GameState game = StateParser.makeGame("test\\tests\\T1123.txt");
@@ -46,29 +34,6 @@ public class GameStateTests {
         assertTrue(result);
     }
 
-    @Test
-    public void testGameStateGetMap(){
-        GameState game = StateParser.makeGame("test\\tests\\T7.txt");
-        char[][] result = game.getMap();
-
-        char[][] maze = {
-                {'+','+','+','+','+','+','+','+','+','+','+','+','+'},
-                {'+','.','.','.','.','.','.','.','.','.','.','.','+'},
-                {'+','.','+','+','.','+','+','+','.','+','+','.','+'},
-                {'+','.','.','+','.','.','+','.','.','+','.','.','+'},
-                {'+','.','.','+','.','.','.','.','.','+','.','.','+'},
-                {'+','.','.','+','.','.','+','.','.','+','.','.','+'},
-                {'+','.','+','+','+','+','+','+','+','+','+','.','+'},
-                {'+','.','.','+','.','.','+','.','.','+','.','.','+'},
-                {'+','.','.','+','.','.','.','.','.','+','.','.','+'},
-                {'+','.','.','+','.','.','+','.','.','+','.','.','+'},
-                {'+','.','+','+','.','+','+','+','.','+','+','.','+'},
-                {'+','.','.','.','.','.','.','.','.','.','.','.','+'},
-                {'+','+','+','+','+','+','+','+','+','+','+','+','+'}
-        };
-
-        assertEquals(maze, result);
-    }
 
     @Test
     public void testMakeGameFailure1(){
@@ -86,60 +51,6 @@ public class GameStateTests {
         assertFalse(result);
     }
 
-    @Test
-    public void testGameStateMakegetBoundedCord1(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point result = game.getBoundedCord(new Point(2, 0));
-
-        assertEquals(new Point(0, 0), result);
-    }
-
-    @Test
-    public void testGameStateMakegetBoundedCord2(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point result = game.getBoundedCord(new Point(0, 3));
-
-        assertEquals(new Point(0, 0), result);
-    }
-
-    @Test
-    public void testGameStateMakegetBoundedCord3(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point result = game.getBoundedCord(new Point(-1, 0));
-
-        assertEquals(new Point(1, 0), result);
-    }
-
-    @Test
-    public void testGameStateMakegetBoundedCord4(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point result = game.getBoundedCord(new Point(0, -1));
-
-        assertEquals(new Point(0, 2), result);
-    }
-
-    @Test
-    public void testSnakeFactoryCreate1(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point[] p = {
-                new Point(0, 0),
-                new Point(0, 1)
-        };
-        Snake[] result = new SnakeFactory().create(game, p);
-
-        assertEquals(null, result);
-    }
-    @Test
-    public void testSnakeFactoryCreate2(){
-        GameState game = StateParser.makeGame("test\\tests\\T4.txt");
-        Point[] p = {
-                new Point(0, 0),
-                new Point(0, -1)
-        };
-        Snake[] result = new SnakeFactory().create(game, p);
-
-        assertEquals(null, result);
-    }
 
 
 
@@ -169,13 +80,6 @@ public class GameStateTests {
 
     }
     */
-
-    @Test
-    public void testFood(){
-        FoodFactory f = new FoodFactory();
-        Food food = new Food(f, new Point(0,5));
-        assertEquals(new Point[] {new Point(0,5)}, food.getLocs());
-    }
 
     @Test
     public void testFoodGetIcon(){
@@ -258,51 +162,6 @@ public class GameStateTests {
         assertTrue(dir2.isOpposit(dir1));
     }
 
-    @Test
-    public void testControlIntellectSetDir1(){
-        GameState gameState = StateParser.makeGame("test\\tests\\T2.txt");
-        Direction dir1 = new Direction(new Point(-1, 0));
-        Direction dir2 = new Direction(new Point(1, 0));
-        ControlIntellect con = new ControlIntellect();
-        con.init(gameState, dir1);
-        con.setDir(dir2);
-
-        Assert.assertEquals(dir1, con.getDir());
-    }
-
-    @Test
-    public void testControlIntellectSetDir2(){
-        GameState gameState = StateParser.makeGame("test\\tests\\T2.txt");
-        Direction dir1 = new Direction(new Point(1, 0));
-        Direction dir2 = new Direction(new Point(0, 1));
-        ControlIntellect con = new ControlIntellect();
-        con.init(gameState, dir1);
-        con.setDir(dir2);
-
-        Assert.assertEquals(dir2, con.getDir());
-    }
-
-    @Test
-    public void testControlIntellectSetDirInt1(){
-        GameState gameState = StateParser.makeGame("test\\tests\\T2.txt");
-        Direction dir1 = new Direction(new Point(1, 0));
-        ControlIntellect con = new ControlIntellect();
-        con.init(gameState, dir1);
-        con.setDir(8);
-        Assert.assertEquals(new Direction(8).getDir(), con.getDir().getDir());
-
-    }
-    @Test
-    public void testControlIntellectSetDirInt2(){
-        GameState gameState = StateParser.makeGame("test\\tests\\T2.txt");
-        Direction dir1 = new Direction(new Point(1, 0));
-        ControlIntellect con = new ControlIntellect();
-        con.init(gameState, dir1);
-        con.setDir(4);
-
-        Assert.assertEquals(dir1.getDir(), con.getDir().getDir());
-
-    }
 
     @Test
     public void testControlIntellectsetSnake(){
@@ -451,37 +310,6 @@ public class GameStateTests {
         assertTrue(b);
     }
 
-    @Test
-    public void testSnakeFactoryIIntelNull(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T10.txt");
-        boolean b = game.makeTick();
-
-        assertTrue(b);
-    }
-
-    @Test
-    public void testSnakeFactoryIIntel(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T11.txt");
-        boolean b = game.makeTick();
-
-        assertTrue(b);
-    }
-
-    @Test
-    public void testFoodFactoryCreateFood(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T10.txt");
-        FoodFactory ff = new FoodFactory();
-        Point[] coor = {
-                new Point(0,5),
-                new Point(0,4),
-                new Point(0,3)
-        };
-        Food[] foods = ff.create(game, coor);
-        assertEquals(3, foods.length);
-    }
 
     @Test
     public void testFoodFactoryUtilize(){
@@ -599,37 +427,6 @@ public class GameStateTests {
         GameState game = g.makeGame("test\\tests\\T19.txt");
     }
     @Test
-    public void testAIMore1(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("tests\\T20.txt");
-        game.setObj(new Food(null,new Point(1,2)));
-        game.makeTick();
-        game.makeTick();
-        game.makeTick();
-        game.makeTick();
-        assertTrue(game.getMap()[0][1]!='@');
-    }
-    @Test
-    public void testAIMore2(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T19.txt");
-        game.setObj(new Food(null,new Point(1,1)));
-        game.makeTick();
-        game.makeTick();
-        game.makeTick();
-        game.makeTick();
-        assertTrue(game.getMap()[0][1]!='@');
-    }
-    @Test
-    public void testAIMore3(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T21.txt");
-        for(int i=0;i<100;i++) {
-            game.makeTick();
-        }
-        assertTrue(game.getMap()[1][0]!='@');
-    }
-    @Test
     public void testWrongGarbage(){
         StateParser g = new StateParser();
         GameState game = g.makeGame("test\\tests\\T17.txt");
@@ -641,13 +438,6 @@ public class GameStateTests {
         StateParser g = new StateParser();
         FoodFactory f=new FoodFactory();
         f.utilize(null);
-        //.configure(g.makeGame("tests\\T17.txt"),new Integer[]{1,2});
-    }
-    @Test
-    public void testWrongCollise(){
-        StateParser g = new StateParser();
-        GameState game = g.makeGame("test\\tests\\T21.txt");
-        game.collise(null);
         //.configure(g.makeGame("tests\\T17.txt"),new Integer[]{1,2});
     }
 
