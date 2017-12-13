@@ -79,9 +79,9 @@ public class GameState {
         try {
             forab(lst,tmp,new ArrayList<Point>(Collections.nCopies(lst.size(), null)));
         }catch(InterruptedException e1){
-            e1.printStackTrace();
+//            e1.printStackTrace();
         }catch(ExecutionException e2){
-            e2.printStackTrace();
+//            e2.printStackTrace();
         }
         cleanSnakes();
         tickObjs();

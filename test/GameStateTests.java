@@ -37,7 +37,7 @@ public class GameStateTests {
 
     @Test
     public void testMakeGameFailure1(){
-        GameState game = StateParser.makeGame("tests\\T22.txt");
+        GameState game = StateParser.makeGame("test\\tests\\T22.txt");
         assertNull(game);
     }
 
